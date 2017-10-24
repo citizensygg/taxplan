@@ -1,0 +1,10 @@
+{
+   "plan_type" : "slanted",
+   "raw_rates" : {
+      "highpoint" : 200000,
+      "lowrate" : 8,
+      "highrate" : 42,
+      "lowpoint" : 0
+   },
+   "plan_name" : "A8-42-200"
+}

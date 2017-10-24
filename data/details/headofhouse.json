@@ -1,0 +1,94 @@
+{
+   "plan_type" : "stepped",
+   "inflections" : [
+      "0",
+      "13350",
+      "50800",
+      "131200",
+      "212500",
+      "416700",
+      "444550"
+   ],
+   "calculatable" : [
+      {
+         "rate" : 39.6,
+         "high" : "top",
+         "running_total" : 126950,
+         "low" : "444550",
+         "margin" : "-"
+      },
+      {
+         "rate" : 35,
+         "high" : "444550",
+         "running_total" : 117202.5,
+         "low" : "416700",
+         "margin" : 27850
+      },
+      {
+         "rate" : 33,
+         "high" : "416700",
+         "running_total" : 49816.5,
+         "low" : "212500",
+         "margin" : 204200
+      },
+      {
+         "rate" : 28,
+         "high" : "212500",
+         "running_total" : 27052.5,
+         "low" : "131200",
+         "margin" : 81300
+      },
+      {
+         "rate" : 25,
+         "high" : "131200",
+         "running_total" : 6952.5,
+         "low" : "50800",
+         "margin" : 80400
+      },
+      {
+         "rate" : 15,
+         "high" : "50800",
+         "running_total" : 1335,
+         "low" : "13350",
+         "margin" : 37450
+      },
+      {
+         "rate" : 10,
+         "high" : "13350",
+         "running_total" : 0,
+         "low" : "0",
+         "margin" : 13350
+      }
+   ],
+   "raw_rates" : [
+      [
+         0,
+         10
+      ],
+      [
+         13350,
+         15
+      ],
+      [
+         50800,
+         25
+      ],
+      [
+         131200,
+         28
+      ],
+      [
+         212500,
+         33
+      ],
+      [
+         416700,
+         35
+      ],
+      [
+         444550,
+         39.6
+      ]
+   ],
+   "plan_name" : "headofhouse"
+}
