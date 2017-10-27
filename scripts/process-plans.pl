@@ -356,12 +356,12 @@ sub slanted_plan
 
 sub top_nav_home
 {
-    return (qq~<a href="/index.html">Home</a>~);
+    return (qq~<a href="/taxplan/index.html">Home</a>~);
 }
 
 sub top_nav_plans
 {
-    return (qq~ -&gt; <a href="/data/display/index.html">Plans</a>~);
+    return (qq~ -&gt; <a href="/taxplan/data/display/index.html">Plans</a>~);
 }
 
 sub top_nav_plan
