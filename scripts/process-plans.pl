@@ -365,7 +365,7 @@ sub top_nav_plans
 sub top_nav_plan
 {
     my $planname = shift;
-    return (qq~ -&gt; <a href="../index.html">$planname</a>~);
+    return (qq~ -&gt; <a href="index.html">$planname</a>~);
 }
 
 ###########################################################################
@@ -630,9 +630,9 @@ sub document_plans
         elsif ($vault{data}{$planname}{plan_type} eq 'slanted') {
             print_display_slanted   ($fhp, $vault{data}{$planname});
         }
-        print_display_bottom        ($fhp, $vault{data}{$planname});
 
-        undef $fhp;       # automatically closes the file
+        #TODO, this might work better as a form with a select box
+        print $fhp "<h3>Compare to another plan</h3>\n<ul>\n";
         
         #------------------------------------------------------------------
 
@@ -646,9 +646,17 @@ sub document_plans
             print_compare_bottom  ($fho, $vault{data}{$planname}, $vault{data}{$othername});
 
             undef $fho;       # automatically closes the file
+
+            print $fhp qq~<li><a href="$othername.html">$othername</a></li>\n~;
+
         }
 
         #------------------------------------------------------------------
+
+        print $fhp "</ul>\n";
+        print_display_bottom        ($fhp, $vault{data}{$planname});
+
+        undef $fhp;       # automatically closes the file
     }
 
     #----------------------------------------------------------------------
