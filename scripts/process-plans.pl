@@ -67,6 +67,7 @@ our $rawjsondir = '../data/rawplans';
 our $plansdir   = '../data/details';
 our $displaydir = '../data/display';
 our $MAXCHART   = 500000; #stop the linecharts before incomes get too big
+our $MAXPERCENT = 50;     #stop the linecharts before incomes get too big
 
 our %vault;
 
@@ -483,13 +484,21 @@ sub print_display_slanted
 ###########################################################################
 #Not used yet
 
-sub data_to_frame
+sub new_frame_with_data
 {
-    my ($frame, $Xvalues, $Yvalues) = @_;
+    my ($graph, $Xvalues, $Yvalues) = @_;
 
-    my @data = map { SVG::Graph::Data::Datum->new (x=>$Xvalues->[$_], y=>$Yvalues->[$_]) }
-               ( 0 .. (scalar (@{$Xvalues}) - 1 ) );
+    #anchor the lines at the corners to make all lines on the same scale
+
+    my @Xvalues = ( 0, @{$Xvalues}, $MAXCHART );
+    my @Yvalues = ( 0, @{$Yvalues}, $MAXPERCENT );
+
+    my $frame = $graph->add_frame;
+    my @data = map { SVG::Graph::Data::Datum->new (x=>$Xvalues[$_], y=>$Yvalues[$_]) }
+               ( 0 .. (scalar (@Xvalues) - 1 ) );
     $frame->add_data(SVG::Graph::Data->new(data => \@data));
+
+    return ($frame);
 }
 
 ###########################################################################
@@ -499,39 +508,58 @@ sub build_twoplan_linegraph
 {
     my ($dataA, $dataB, $points) = @_;
 
-    my @setbox = ( [0, $MAXCHART], [0, 100] );
+    my @setbox = ( [0, $MAXCHART], [0, $MAXPERCENT] );
 
     #----------------------------------------------------------------------
 
     #create a new SVG document to plot in...
     my $graph = SVG::Graph->new (width=>800, height=>300, margin=>30);
- 
-    #and create a frame to hold the data/glyphs
-    my $frame = $graph->add_frame;
- 
-    #put the xy data into the frame
-    #    my @data = map {SVG::Graph::Data::Datum->new(x=>$_,y=>$_^2)} (1,2,3,4,5);
-    my @data = map { SVG::Graph::Data::Datum->new (x=>$points->{income}[$_], y=>$points->{Aeff}[$_]) }
-               ( 0 .. (scalar (@{$points->{income}}) - 1 ) );
-    _say (Dumper (\@data));
-    $frame->add_data(SVG::Graph::Data->new(data => \@data));
- 
-    #add some glyphs to apply to the data in the frame
-    $frame->add_glyph('axis',                       #add an axis glyph
-                      'x_absolute_ticks' => 50000,  #with ticks on the x axis
-                      'y_absolute_ticks' => 5,      #and  ticks on the y axis
-                      'stroke'           => 'black',#draw the axis black
-                      'stroke-width'     => 2,      #and 2px thick
-                     );
- 
-    $frame->add_glyph('line',               #add a scatterplot glyph
-                      'stroke' => 'red',    #the dots will be outlined in red,
-                      'fill'   => 'red',    #filled red,
-                      'fill-opacity' => 0.5,#and 50% opaque
-);
- 
-#print the graphic
-#print $graph->draw;
+
+    #use 0,0 and $MAXCHART,100 to force the box to always be the same size
+    my $frameBOX = new_frame_with_data ($graph, [0, $MAXCHART], [0, 100]);
+    $frameBOX->add_glyph(
+        'scatter',
+        'stroke'            => 'white',
+        'fill'              => 'white',
+        'fill-opacity'      => 0.5,         #and 50% opaque
+    );
+    $frameBOX->add_glyph(
+        'axis',                             #add an axis glyph
+        'x_absolute_ticks'  => 50000,       #with ticks on the x axis
+        'y_absolute_ticks'  => 10,          #and  ticks on the y axis
+        'stroke'            => 'black',     #draw the axis black
+        'stroke-width'      => 2,           #and 2px thick
+    );
+
+    my $frameAE = new_frame_with_data ($graph, $points->{income}, $points->{Aeff});
+    $frameAE->add_glyph(
+        'line',
+        'stroke'            => 'red',
+        'fill'              => 'red',
+        'fill-opacity'      => 0.5,         #and 50% opaque
+    );
+
+    my $frameAM = new_frame_with_data ($graph, $points->{income}, $points->{Amarg});
+    $frameAM->add_glyph(
+        'line',
+        'stroke'            => 'green',
+        'fill'              => 'green',
+        'fill-opacity'      => 0.5,         #and 50% opaque
+    );
+    my $frameBE = new_frame_with_data ($graph, $points->{income}, $points->{Beff});
+    $frameBE->add_glyph(
+        'line',
+        'stroke'            => 'purple',
+        'fill'              => 'purple',
+        'fill-opacity'      => 0.5,         #and 50% opaque
+    );
+    my $frameBM = new_frame_with_data ($graph, $points->{income}, $points->{Bmarg});
+    $frameBM->add_glyph(
+        'line',
+        'stroke'            => 'blue',
+        'fill'              => 'blue',
+        'fill-opacity'      => 0.5,         #and 50% opaque
+    );
 
 my $fhtemp = open_writable_file ("sample.svg");
 print $fhtemp $graph->draw;
