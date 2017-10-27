@@ -359,13 +359,13 @@ sub top_nav_home
 
 sub top_nav_plans
 {
-    return (qq~ -&gt; <a href="/display/index.html">Plans</a>~);
+    return (qq~ -&gt; <a href="/data/display/index.html">Plans</a>~);
 }
 
 sub top_nav_plan
 {
     my $planname = shift;
-    return (qq~ -&gt; <a href="display/$planname/index.html">$planname</a>~);
+    return (qq~ -&gt; <a href="../index.html">$planname</a>~);
 }
 
 ###########################################################################
