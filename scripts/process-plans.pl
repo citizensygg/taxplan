@@ -1,19 +1,19 @@
 #!/usr/bin/env perl
 
 use strict;
-use 5.14.1;
+use 5.14.1;  #TODO: probably not needed, should look closer
 
 use Data::Dumper;
 use FileHandle;
 use Getopt::Long;
 
 use File::Path;
-use File::Path;
 #use File::Copy;
-
-use YAML;
 use JSON;
-
+use SVG;
+use SVG::Graph;
+use SVG::Graph::Data;
+use SVG::Graph::Data::Datum;
 
 ###########################################################################
 ###########################################################################
@@ -66,6 +66,7 @@ my @slices = (
 our $rawjsondir = '../data/rawplans';
 our $plansdir   = '../data/details';
 our $displaydir = '../data/display';
+our $MAXCHART   = 500000; #stop the linecharts before incomes get too big
 
 our %vault;
 
@@ -480,6 +481,65 @@ sub print_display_slanted
 }
 
 ###########################################################################
+#Not used yet
+
+sub data_to_frame
+{
+    my ($frame, $Xvalues, $Yvalues) = @_;
+
+    my @data = map { SVG::Graph::Data::Datum->new (x=>$Xvalues->[$_], y=>$Yvalues->[$_]) }
+               ( 0 .. (scalar (@{$Xvalues}) - 1 ) );
+    $frame->add_data(SVG::Graph::Data->new(data => \@data));
+}
+
+###########################################################################
+#strongly inspired by the sample on https://metacpan.org/pod/SVG::Graph
+
+sub build_twoplan_linegraph
+{
+    my ($dataA, $dataB, $points) = @_;
+
+    my @setbox = ( [0, $MAXCHART], [0, 100] );
+
+    #----------------------------------------------------------------------
+
+    #create a new SVG document to plot in...
+    my $graph = SVG::Graph->new (width=>800, height=>300, margin=>30);
+ 
+    #and create a frame to hold the data/glyphs
+    my $frame = $graph->add_frame;
+ 
+    #put the xy data into the frame
+    #    my @data = map {SVG::Graph::Data::Datum->new(x=>$_,y=>$_^2)} (1,2,3,4,5);
+    my @data = map { SVG::Graph::Data::Datum->new (x=>$points->{income}[$_], y=>$points->{Aeff}[$_]) }
+               ( 0 .. (scalar (@{$points->{income}}) - 1 ) );
+    _say (Dumper (\@data));
+    $frame->add_data(SVG::Graph::Data->new(data => \@data));
+ 
+    #add some glyphs to apply to the data in the frame
+    $frame->add_glyph('axis',                       #add an axis glyph
+                      'x_absolute_ticks' => 50000,  #with ticks on the x axis
+                      'y_absolute_ticks' => 5,      #and  ticks on the y axis
+                      'stroke'           => 'black',#draw the axis black
+                      'stroke-width'     => 2,      #and 2px thick
+                     );
+ 
+    $frame->add_glyph('line',               #add a scatterplot glyph
+                      'stroke' => 'red',    #the dots will be outlined in red,
+                      'fill'   => 'red',    #filled red,
+                      'fill-opacity' => 0.5,#and 50% opaque
+);
+ 
+#print the graphic
+#print $graph->draw;
+
+my $fhtemp = open_writable_file ("sample.svg");
+print $fhtemp $graph->draw;
+undef $fhtemp;
+    
+}
+
+###########################################################################
 
 sub quickformat_percent     { return sprintf ("%7.2f\%",  shift); }
 sub quickformat_dollars     { return sprintf ("\$%12.2f", shift); }
@@ -491,11 +551,26 @@ sub print_compare_numbers
     my @incomes = combine_inflection_points ($dataA, $dataB);
     my @rows;   #table version
     #my $svg;    #graphical version
+    my %points = ( map { $_ => [] } qw ( income Aeff Amarg Beff Bmarg ) );
+
+    #----------------------------------------------------------------------
 
     foreach my $income (@incomes) {
 
+        #Get the data
         my $valuesA = amount_due ($dataA, $income);
         my $valuesB = amount_due ($dataB, $income);
+
+        #Prepare it to send to make the SVG chart
+        if ($income <= $MAXCHART) {
+            push ($points{income},  $income);
+            push ($points{Aeff},    $valuesA->[1]);
+            push ($points{Amarg},   $valuesA->[2]);
+            push ($points{Beff},    $valuesB->[1]);
+            push ($points{Bmarg},   $valuesB->[2]);
+        }
+
+        #Format it for the table of values
         push (@rows, join ("\n",
             '<tr>',
             ( map { "<td>$_</td>" }
@@ -518,6 +593,13 @@ sub print_compare_numbers
             '',
         ));
     }
+
+    #TODO: Temp just do one graph straight to terminal for testing
+    if ( ($dataA->{plan_name} eq 'headofhouse') && ($dataB->{plan_name} eq 'A8-42-300') ) {
+        build_twoplan_linegraph ($dataA, $dataB, \%points);
+    }
+
+    #----------------------------------------------------------------------
 
 print $fh <<EOF;
 <table>
@@ -762,7 +844,7 @@ Currently supported flags
   -h -help      Display this help message
   -v -verbose	Show more information while it runs
   -d -debug     Used to see the commands without actually running them
-  -r -raw       Rebuild plan details from raw yaml (only when adding plan)
+  -r -raw       Rebuild plan details from raw json (only when adding plan)
 
 
 Currently supported parameters
