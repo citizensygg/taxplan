@@ -65,6 +65,9 @@ my @slices = (
 
 our $rawjsondir = '../data/rawplans';
 our $plansdir   = '../data/details';
+our $displaydir = '../data/display';
+
+our %vault;
 
 
 ###########################################################################
@@ -103,6 +106,17 @@ sub slurp_file {
          _error ("There was a problem reading from '$filename'");
     }
     return ($content);
+}
+
+###########################################################################
+
+sub open_writable_file
+{
+    my $filename = shift;
+    my $fh = FileHandle->new($filename, "w");
+    _error "Could not open $filename to write" unless (defined $fh);
+
+    return ($fh);
 }
 
 ###########################################################################
@@ -284,12 +298,16 @@ sub amount_due
 {
 	my ($plan, $income) = @_;
 
+    return ($plan->{due}{$income}) if (exists $plan->{due}{$income});
+
 	if ($plan->{plan_type} eq 'stepped') {
-		return stepped_plan ($plan, $income);
+		$plan->{due}{$income} = stepped_plan ($plan, $income);
 	}
     elsif ($plan->{plan_type} eq 'slanted') {
-		return slanted_plan ($plan, $income);
+		$plan->{due}{$income} = slanted_plan ($plan, $income);
 	}
+
+    return ($plan->{due}{$income});
 }
 
 ###########################################################################
@@ -304,10 +322,10 @@ sub stepped_plan
 		if ($income > $row->{low}) {
 			my $tax = ($row->{rate} / 100 * ($income - $row->{low})) + $row->{running_total};
 			my $effective_rate = $tax / $income * 100;
-			return ( $tax, $effective_rate, $row->{rate});
+			return ( [ $tax, $effective_rate, $row->{rate} ] );
 		}
 	}
-	return (0, $layers->[-1]{rate}, $layers->[-1]{rate});
+	return ( [ 0, $layers->[-1]{rate}, $layers->[-1]{rate} ] );
 }
 
 ###########################################################################
@@ -328,7 +346,348 @@ sub slanted_plan
 		$marginal_rate =   ($income * $details->{marginal_slope} + $details->{lowrate} );
 	}
 	my $effective_rate = ($income > 0) ? $tax / $income * 100 : $details->{lowrate};
-	return ( $tax, $effective_rate, $marginal_rate);
+	return ( [ $tax, $effective_rate, $marginal_rate ] );
+}
+
+###########################################################################
+###########################################################################
+
+sub top_nav_home
+{
+    return (qq~<a href="/index.html">Home</a>~);
+}
+
+sub top_nav_plans
+{
+    return (qq~ -&gt; <a href="/display/index.html">Plans</a>~);
+}
+
+sub top_nav_plan
+{
+    my $planname = shift;
+    return (qq~ -&gt; <a href="display/$planname/index.html">$planname</a>~);
+}
+
+###########################################################################
+###########################################################################
+
+sub print_display_top
+{
+    my ($fh, $data) = @_;
+
+    my $name = $data->{plan_name};
+
+    print $fh join ("\n",
+        '<html>',
+        '<head>',
+        "<title>$data->{plan_name}</title>",
+        '</head>',
+        '<body>',
+        top_nav_home (),
+        top_nav_plans (),
+        '<hr>',
+        "<h1>Details of taxplan: $data->{plan_name}</h1>",
+        '',
+    );
+
+}
+
+###########################################################################
+
+sub print_compare_top
+{
+    my ($fh, $dataA, $dataB) = @_;
+
+    print $fh join ("\n",
+        '<html>',
+        '<head>',
+        "<title>$dataA->{plan_name} vs $dataB->{plan_name}</title>",
+        '</head>',
+        '<body>',
+        top_nav_home (),
+        top_nav_plans (),
+        top_nav_plan ($dataA->{plan_name}),
+        '<hr>',
+        "<h1>Comparison of taxplans: $dataA->{plan_name} vs $dataB->{plan_name}</h1>",
+        '',
+    );
+
+}
+
+###########################################################################
+
+sub print_index_top
+{
+    my ($fh) = @_;
+
+    print $fh join ("\n",
+        '<html>',
+        '<head>',
+        "<title>Tax Plans</title>",
+        '</head>',
+        '<body>',
+        top_nav_home (),
+        '<hr>',
+        "<h1>Tax Plans</h1>",
+        '<table>',
+        "<tr><th>Plan</th><th>Type</th><th>Description</th></tr>",
+        '',
+    );
+
+}
+
+###########################################################################
+
+sub print_display_stepped
+{
+    my ($fh, $data) = @_;
+
+    print $fh join ("\n",
+        '<table>',
+        '<tr>',
+        ( map { "<th>$_</th>" } ("From", "To", "Marginal Rate", "Total", "Rate")),
+        '</tr>',
+        '',
+    );
+    foreach my $row (reverse @{$data->{calculatable}}) {
+        print $fh join ("\n",
+            '<tr>',
+            ( map { "<td>$row->{$_}</td>" } qw (low high margin running_total rate) ),
+            '</tr>',
+            '',
+        );
+    }
+    print $fh join ("\n",
+        '</table>',
+        '',
+    );
+
+}
+
+###########################################################################
+
+sub print_display_slanted
+{
+    my ($fh, $data) = @_;
+
+    print $fh join ("\n",
+        '<h3>Temporary description</h3>',
+        '<pre>',
+        Dumper ($data->{calculatable}),
+        '</pre>',
+        '',
+    );
+}
+
+###########################################################################
+
+sub quickformat_percent     { return sprintf ("%7.2f\%",  shift); }
+sub quickformat_dollars     { return sprintf ("\$%12.2f", shift); }
+
+sub print_compare_numbers
+{
+    my ($fh, $dataA, $dataB) = @_;
+
+    my @incomes = combine_inflection_points ($dataA, $dataB);
+    my @rows;   #table version
+    #my $svg;    #graphical version
+
+    foreach my $income (@incomes) {
+
+        my $valuesA = amount_due ($dataA, $income);
+        my $valuesB = amount_due ($dataB, $income);
+        push (@rows, join ("\n",
+            '<tr>',
+            ( map { "<td>$_</td>" }
+                quickformat_dollars ($income),
+
+                quickformat_dollars ($valuesA->[0]),
+                quickformat_percent ($valuesA->[1]),
+                quickformat_percent ($valuesA->[2]),
+
+                quickformat_dollars ($valuesB->[0]),
+                quickformat_percent ($valuesB->[1]),
+                quickformat_percent ($valuesB->[2]),
+
+                quickformat_percent (($valuesB->[0])
+                                     ? ( ($valuesB->[0] - $valuesA->[0]) / $valuesB->[0] * 100)
+                                     : 0
+                                    ),
+            ),
+            '</tr>',
+            '',
+        ));
+    }
+
+print $fh <<EOF;
+<table>
+<tr>
+   <th rowspan="2">Income</th>
+   <th colspan="3">First Plan</th>
+   <th colspan="3">Second Plan</th>
+   <th rowspan="2">Change</th>
+</tr>
+<tr>
+   <th>Tax Due</th><th>Effective Rate</th><th>Marginal Rate</th>
+   <th>Tax Due</th><th>Effective Rate</th><th>Marginal Rate</th>
+</tr>
+
+EOF
+
+    print $fh join ("\n",
+        @rows,
+        '</table>',
+        '',
+    );
+
+}
+
+###########################################################################
+
+sub print_index_plan
+{
+    my ($fh, $data) = @_;
+
+    print $fh join ("\n",
+        '<tr><td>',
+        "<a href='$data->{plan_name}/index.html'>$data->{plan_name}</a>",
+        '</td><td>',
+        $data->{plan_type} || '&nbsp;',
+        '</td><td>',
+        $data->{description} || '&nbsp;',
+        '</td></tr>',
+        '',
+    );
+}
+
+###########################################################################
+
+sub print_display_bottom
+{
+    my ($fh, $data) = @_;
+
+print $fh <<EOF;
+</body>
+</html>
+
+EOF
+}
+
+###########################################################################
+
+sub print_compare_bottom
+{
+    my ($fh, $dataA, $dataB) = @_;
+
+print $fh <<EOF;
+</body>
+</html>
+
+EOF
+}
+
+###########################################################################
+
+sub print_index_bottom
+{
+    my ($fh) = @_;
+
+print $fh <<EOF;
+</table>
+</body>
+</html>
+
+EOF
+}
+
+###########################################################################
+
+sub document_plans
+{
+    _say 'entering document_plans';
+
+    mkpath ("$displaydir", 1, 0755);
+    my $fhi = open_writable_file ("$displaydir/index.html");
+
+    print_index_top     ($fhi);
+
+    #----------------------------------------------------------------------
+
+    foreach my $planname (@{$vault{planlist}}) {
+        mkpath ("$displaydir/$planname", 1, 0755);
+
+        print_index_plan    ($fhi, $vault{data}{$planname});
+
+        #------------------------------------------------------------------
+
+        my $fhp = open_writable_file ("$displaydir/$planname/index.html");
+
+        print_display_top           ($fhp, $vault{data}{$planname});
+        if ($vault{data}{$planname}{plan_type} eq 'stepped') {
+            _say "$planname is stepped";
+            print_display_stepped   ($fhp, $vault{data}{$planname});
+        }
+        elsif ($vault{data}{$planname}{plan_type} eq 'slanted') {
+            print_display_slanted   ($fhp, $vault{data}{$planname});
+        }
+        print_display_bottom        ($fhp, $vault{data}{$planname});
+
+        undef $fhp;       # automatically closes the file
+        
+        #------------------------------------------------------------------
+
+        foreach my $othername (@{$vault{planlist}}) {
+            next if ($planname eq $othername); #don't compare to ourself
+
+            my $fho = open_writable_file ("$displaydir/$planname/$othername.html");
+
+            print_compare_top     ($fho, $vault{data}{$planname}, $vault{data}{$othername});
+            print_compare_numbers ($fho, $vault{data}{$planname}, $vault{data}{$othername});
+            print_compare_bottom  ($fho, $vault{data}{$planname}, $vault{data}{$othername});
+
+            undef $fho;       # automatically closes the file
+        }
+
+        #------------------------------------------------------------------
+    }
+
+    #----------------------------------------------------------------------
+
+    print_index_bottom  ($fhi);
+    undef $fhi;       # automatically closes the file
+}
+
+###########################################################################
+#DEPRICATED
+
+sub process_usable_to_display
+{
+    _say 'entering process_usable_to_display';
+    opendir (DIR, $plansdir) or die "could not open $plansdir, $!";
+    my @files = grep { /\.json/ } readdir DIR;
+    closedir DIR;
+
+    mkpath ($displaydir, 1, 0755);
+    my $json = JSON->new->pretty ();
+
+    foreach my $planfile (@files) {
+        _say ("   now on $planfile");
+        my $data    = slurp_json ("$plansdir/$planfile", $json);
+        my $htmlfile   = $planfile;
+        $htmlfile  =~ s/\.json$/.html/;
+        my $fh      = open_writable_file ("$displaydir/$htmlfile");
+
+        print_display_top     ($fh, $data);
+        if ($data->{plan_type} eq 'stepped') {
+            print_display_stepped ($fh, $data);
+        }
+        elsif ($data->{plan_type} eq 'slanted') {
+            print_display_slanted ($fh, $data);
+        }
+        print_display_bottom  ($fh, $data);
+
+        undef $fh;       # automatically closes the file
+    }
 }
 
 ###########################################################################
@@ -354,6 +713,29 @@ sub display_plan
 		print Dumper ($plan->{calculatable});
 	}
 	print "\n\n";
+}
+
+###########################################################################
+
+sub load_all_plans_data
+{
+    _say 'entering load_all_plans_data';
+    opendir (DIR, $plansdir) or die "could not open $plansdir, $!";
+    my @files = sort
+                map { $_ =~ m/(.*?)\.json/ ; ($1) }
+                grep { /\.json/ } readdir DIR;
+    closedir DIR;
+
+    my $json = JSON->new->pretty ();
+    %vault = (planlist => \@files,
+              data => {},
+             );
+
+    foreach my $planname (@files) {
+        _say ("   now on $planname");
+        $vault{data}{$planname} = slurp_json ("$plansdir/$planname.json", $json);
+        $vault{data}{$planname}{due} = {};
+    }
 }
 
 ################################################ subroutine header begin ##
@@ -406,6 +788,9 @@ if (exists $opts{raw}) {
 }
 
 if ($opts{mode} eq 'build') {
+    load_all_plans_data ();
+    document_plans ();
+    #process_usable_to_display ();
 }
 elsif ($opts{mode} eq 'single') {
     display_plan ($opts{before});
