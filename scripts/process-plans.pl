@@ -502,6 +502,57 @@ sub new_frame_with_data
 }
 
 ###########################################################################
+
+sub create_svg
+{
+    _say 'entering create_svg';
+    my %lines = @_;
+
+    #create a new SVG document to plot in...
+    my $graph = SVG::Graph->new (width=>1000, height=>300, margin=>30);
+
+    #----------------------------------------------------------------------
+    #use 0,0 and $MAXCHART,$MAXPERCENT to force the box to always be the same size
+
+    my $frame = $graph->add_frame;
+    my @data = map { SVG::Graph::Data::Datum->new ( x => $_->[0], y => $_->[1]) }
+               ( [0, 0] , [ $MAXCHART, $MAXPERCENT] );
+    $frame->add_data(SVG::Graph::Data->new(data => \@data));
+    #    $frame->add_glyph(
+    #        'scatter',
+    #        'stroke'            => 'white',
+    #        'fill'              => 'white',
+    #        'fill-opacity'      => 0.5,         #and 50% opaque
+    #    );
+    $frame->add_glyph(
+        'axis',                             #add an axis glyph
+        'x_absolute_ticks'  => 50000,       #with ticks on the x axis
+        'y_absolute_ticks'  => 10,          #and  ticks on the y axis
+        'stroke'            => 'black',     #draw the axis black
+        'stroke-width'      => 2,           #and 2px thick
+    );
+
+    #----------------------------------------------------------------------
+
+    foreach my $color (sort keys %lines) { #sort to maintain layer order
+        $frame = $graph->add_frame;
+        @data = map { SVG::Graph::Data::Datum->new ( x => $_->[0], y => $_->[1]) }
+                   ( @{$lines{$color}});
+        $frame->add_data(SVG::Graph::Data->new(data => \@data));
+        $frame->add_glyph(
+            'line',
+            'stroke'            => $color,
+            'fill'              => $color,
+            'fill-opacity'      => 0.5,         #and 50% opaque
+        );
+    }
+
+    #----------------------------------------------------------------------
+
+    return ($graph->draw);
+}
+
+###########################################################################
 #strongly inspired by the sample on https://metacpan.org/pod/SVG::Graph
 
 sub build_twoplan_linegraph
@@ -522,13 +573,6 @@ sub build_twoplan_linegraph
         'stroke'            => 'white',
         'fill'              => 'white',
         'fill-opacity'      => 0.5,         #and 50% opaque
-    );
-    $frameBOX->add_glyph(
-        'axis',                             #add an axis glyph
-        'x_absolute_ticks'  => 50000,       #with ticks on the x axis
-        'y_absolute_ticks'  => 10,          #and  ticks on the y axis
-        'stroke'            => 'black',     #draw the axis black
-        'stroke-width'      => 2,           #and 2px thick
     );
 
     my $frameAE = new_frame_with_data ($graph, $points->{income}, $points->{Aeff});
@@ -776,36 +820,86 @@ sub document_plans
 }
 
 ###########################################################################
-#DEPRICATED
 
-sub process_usable_to_display
+sub calculate_diagram_points
 {
-    _say 'entering process_usable_to_display';
-    opendir (DIR, $plansdir) or die "could not open $plansdir, $!";
-    my @files = grep { /\.json/ } readdir DIR;
-    closedir DIR;
+    _say 'entering calculate_diagram_points';
 
-    mkpath ($displaydir, 1, 0755);
-    my $json = JSON->new->pretty ();
+    foreach my $planname (@{$vault{planlist}}) {
+        my $plan = $vault{data}{$planname};
 
-    foreach my $planfile (@files) {
-        _say ("   now on $planfile");
-        my $data    = slurp_json ("$plansdir/$planfile", $json);
-        my $htmlfile   = $planfile;
-        $htmlfile  =~ s/\.json$/.html/;
-        my $fh      = open_writable_file ("$displaydir/$htmlfile");
-
-        print_display_top     ($fh, $data);
-        if ($data->{plan_type} eq 'stepped') {
-            print_display_stepped ($fh, $data);
+        $plan->{graph_marginal}  = [ [0,0] ];
+        if ($plan->{plan_type} eq 'stepped') {
+            foreach my $row (reverse @{$plan->{calculatable}}) {
+                push (@{$plan->{graph_marginal}},
+                      map { [ $_, $row->{rate} ] }
+#                      ( ($row->{high} eq 'top') ? $MAXCHART : $row->{high} )
+                      ( $row->{low}, ($row->{high} eq 'top') ? $MAXCHART : $row->{high} )
+                     );
+            }
         }
-        elsif ($data->{plan_type} eq 'slanted') {
-            print_display_slanted ($fh, $data);
+        elsif ($plan->{plan_type} eq 'slanted') {
+            push (@{$plan->{graph_marginal}},
+                  map { [ $_, $plan->{due}{$_}[2] ] }
+                  ( $plan->{calculatable}{lowpoint}, $plan->{calculatable}{highpoint}, $MAXCHART )
+                 );
         }
-        print_display_bottom  ($fh, $data);
+        push (@{$plan->{graph_marginal}}, [ $MAXCHART, $MAXPERCENT ]);
 
-        undef $fh;       # automatically closes the file
+        #------------------------------------------------------------------
+
+        $plan->{graph_effective} = [ [0,0] ];
+        foreach my $income (sort { $a <=> $b }
+                            map { ( $MAXCHART < $_ ) ? () : ($_) }
+                            keys %{$plan->{due}}
+                           ) {
+            push (@{$plan->{graph_effective}}, [ $income, $plan->{due}{$income}[1] ]);
+        }
+        push (@{$plan->{graph_effective}}, [ $MAXCHART, $MAXPERCENT ]);
     }
+}
+
+###########################################################################
+
+sub create_diagrams
+{
+    _say 'entering create_diagrams';
+
+    foreach my $planname (@{$vault{planlist}}) {
+        
+        #------------------------------------------------------------------
+
+        foreach my $othername (@{$vault{planlist}}) {
+            next unless ( ($planname eq 'headofhouse') && ($othername eq 'A8-42-300') );
+
+            my $fhtemp = open_writable_file ("newsample.pl");
+            print $fhtemp Dumper ({
+                green   => $vault{data}{$planname}{graph_marginal},
+                blue    => $vault{data}{$planname}{graph_effective},
+                red     => $vault{data}{$othername}{graph_marginal},
+                orange  => $vault{data}{$othername}{graph_effective},
+            });
+            print $fhtemp Dumper ($vault{data}{$planname});
+            print $fhtemp Dumper ($vault{data}{$othername});
+            undef $fhtemp;
+
+            #my $fh = open_writable_file ("$displaydir/$planname/$othername.svg");
+            my $fh = open_writable_file ("newsample.svg");
+            print $fh create_svg (
+                green   => $vault{data}{$planname}{graph_marginal},
+                blue    => $vault{data}{$planname}{graph_effective},
+                red     => $vault{data}{$othername}{graph_marginal},
+                orange  => $vault{data}{$othername}{graph_effective},
+            );
+            undef $fh;
+        }
+
+        #------------------------------------------------------------------
+
+    }
+
+    #----------------------------------------------------------------------
+
 }
 
 ###########################################################################
@@ -908,7 +1002,8 @@ if (exists $opts{raw}) {
 if ($opts{mode} eq 'build') {
     load_all_plans_data ();
     document_plans ();
-    #process_usable_to_display ();
+    calculate_diagram_points ();
+    create_diagrams ();
 }
 elsif ($opts{mode} eq 'single') {
     display_plan ($opts{before});
