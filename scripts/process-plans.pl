@@ -482,34 +482,18 @@ sub print_display_slanted
 }
 
 ###########################################################################
-#Not used yet
-
-sub new_frame_with_data
-{
-    my ($graph, $Xvalues, $Yvalues) = @_;
-
-    #anchor the lines at the corners to make all lines on the same scale
-
-    my @Xvalues = ( 0, @{$Xvalues}, $MAXCHART );
-    my @Yvalues = ( 0, @{$Yvalues}, $MAXPERCENT );
-
-    my $frame = $graph->add_frame;
-    my @data = map { SVG::Graph::Data::Datum->new (x=>$Xvalues[$_], y=>$Yvalues[$_]) }
-               ( 0 .. (scalar (@Xvalues) - 1 ) );
-    $frame->add_data(SVG::Graph::Data->new(data => \@data));
-
-    return ($frame);
-}
-
-###########################################################################
 
 sub create_svg
 {
     _say 'entering create_svg';
-    my %lines = @_;
+    my @lines = @_;
+
+    my $graph_width     = 800;
+    my $graph_height    = 300;
+    my $graph_margin    = 30;
 
     #create a new SVG document to plot in...
-    my $graph = SVG::Graph->new (width=>1000, height=>300, margin=>30);
+    my $graph = SVG::Graph->new (width=>$graph_width, height=>$graph_height, margin=>30);
 
     #----------------------------------------------------------------------
     #use 0,0 and $MAXCHART,$MAXPERCENT to force the box to always be the same size
@@ -518,12 +502,6 @@ sub create_svg
     my @data = map { SVG::Graph::Data::Datum->new ( x => $_->[0], y => $_->[1]) }
                ( [0, 0] , [ $MAXCHART, $MAXPERCENT] );
     $frame->add_data(SVG::Graph::Data->new(data => \@data));
-    #    $frame->add_glyph(
-    #        'scatter',
-    #        'stroke'            => 'white',
-    #        'fill'              => 'white',
-    #        'fill-opacity'      => 0.5,         #and 50% opaque
-    #    );
     $frame->add_glyph(
         'axis',                             #add an axis glyph
         'x_absolute_ticks'  => 50000,       #with ticks on the x axis
@@ -532,83 +510,66 @@ sub create_svg
         'stroke-width'      => 2,           #and 2px thick
     );
 
+    $graph->svg->text(
+        x       =>                 $graph_margin + 10,
+        y       => $graph_height - $graph_margin + 20,
+        stroke  => 'black',
+        fill    => 'black',
+        -cdata  => 0,
+    );
+    $graph->svg->text(
+        x       => $graph_width  - $graph_margin - 70,
+        y       => $graph_height - $graph_margin + 15,
+        stroke  => 'black',
+        fill    => 'black',
+        -cdata  => $MAXCHART,
+    );
+    $graph->svg->text(
+        x       => 10,
+        y       => $graph_height - $graph_margin - 10,
+        stroke  => 'black',
+        fill    => 'black',
+        -cdata  => 0,
+    );
+    $graph->svg->text(
+        x       => 10,
+        y       => $graph_margin + 15,
+        stroke  => 'black',
+        fill    => 'black',
+        -cdata  => $MAXPERCENT,
+    );
+
     #----------------------------------------------------------------------
 
-    foreach my $color (sort keys %lines) { #sort to maintain layer order
+    my $line_description_X      = 50;
+    my $line_description_Y      = 50;
+    my $line_description_height = 20;
+
+    foreach my $line (@lines) {
         $frame = $graph->add_frame;
         @data = map { SVG::Graph::Data::Datum->new ( x => $_->[0], y => $_->[1]) }
-                   ( @{$lines{$color}});
+                   ( @{$line->{points}});
         $frame->add_data(SVG::Graph::Data->new(data => \@data));
         $frame->add_glyph(
             'line',
-            'stroke'            => $color,
-            'fill'              => $color,
-            'fill-opacity'      => 0.5,         #and 50% opaque
+            'stroke'            => $line->{color},
+            'fill'              => $line->{color},
+            #'fill-opacity'      => 0.5,         #and 50% opaque
+            'stroke-width'      => 2,           #and 2px thick
         );
+        $graph->svg->text(
+            x                   => $line_description_X,
+            y                   => $line_description_Y,
+            'stroke'            => $line->{color},
+            'fill'              => $line->{color},
+            -cdata              => $line->{legend},
+        );
+        $line_description_Y += $line_description_height;
     }
 
     #----------------------------------------------------------------------
 
     return ($graph->draw);
-}
-
-###########################################################################
-#strongly inspired by the sample on https://metacpan.org/pod/SVG::Graph
-
-sub build_twoplan_linegraph
-{
-    my ($dataA, $dataB, $points) = @_;
-
-    my @setbox = ( [0, $MAXCHART], [0, $MAXPERCENT] );
-
-    #----------------------------------------------------------------------
-
-    #create a new SVG document to plot in...
-    my $graph = SVG::Graph->new (width=>800, height=>300, margin=>30);
-
-    #use 0,0 and $MAXCHART,100 to force the box to always be the same size
-    my $frameBOX = new_frame_with_data ($graph, [0, $MAXCHART], [0, 100]);
-    $frameBOX->add_glyph(
-        'scatter',
-        'stroke'            => 'white',
-        'fill'              => 'white',
-        'fill-opacity'      => 0.5,         #and 50% opaque
-    );
-
-    my $frameAE = new_frame_with_data ($graph, $points->{income}, $points->{Aeff});
-    $frameAE->add_glyph(
-        'line',
-        'stroke'            => 'red',
-        'fill'              => 'red',
-        'fill-opacity'      => 0.5,         #and 50% opaque
-    );
-
-    my $frameAM = new_frame_with_data ($graph, $points->{income}, $points->{Amarg});
-    $frameAM->add_glyph(
-        'line',
-        'stroke'            => 'green',
-        'fill'              => 'green',
-        'fill-opacity'      => 0.5,         #and 50% opaque
-    );
-    my $frameBE = new_frame_with_data ($graph, $points->{income}, $points->{Beff});
-    $frameBE->add_glyph(
-        'line',
-        'stroke'            => 'purple',
-        'fill'              => 'purple',
-        'fill-opacity'      => 0.5,         #and 50% opaque
-    );
-    my $frameBM = new_frame_with_data ($graph, $points->{income}, $points->{Bmarg});
-    $frameBM->add_glyph(
-        'line',
-        'stroke'            => 'blue',
-        'fill'              => 'blue',
-        'fill-opacity'      => 0.5,         #and 50% opaque
-    );
-
-my $fhtemp = open_writable_file ("sample.svg");
-print $fhtemp $graph->draw;
-undef $fhtemp;
-    
 }
 
 ###########################################################################
@@ -622,8 +583,6 @@ sub print_compare_numbers
 
     my @incomes = combine_inflection_points ($dataA, $dataB);
     my @rows;   #table version
-    #my $svg;    #graphical version
-    my %points = ( map { $_ => [] } qw ( income Aeff Amarg Beff Bmarg ) );
 
     #----------------------------------------------------------------------
 
@@ -632,15 +591,6 @@ sub print_compare_numbers
         #Get the data
         my $valuesA = amount_due ($dataA, $income);
         my $valuesB = amount_due ($dataB, $income);
-
-        #Prepare it to send to make the SVG chart
-        if ($income <= $MAXCHART) {
-            push ($points{income},  $income);
-            push ($points{Aeff},    $valuesA->[1]);
-            push ($points{Amarg},   $valuesA->[2]);
-            push ($points{Beff},    $valuesB->[1]);
-            push ($points{Bmarg},   $valuesB->[2]);
-        }
 
         #Format it for the table of values
         push (@rows, join ("\n",
@@ -664,11 +614,6 @@ sub print_compare_numbers
             '</tr>',
             '',
         ));
-    }
-
-    #TODO: Temp just do one graph straight to terminal for testing
-    if ( ($dataA->{plan_name} eq 'headofhouse') && ($dataB->{plan_name} eq 'A8-42-300') ) {
-        build_twoplan_linegraph ($dataA, $dataB, \%points);
     }
 
     #----------------------------------------------------------------------
@@ -870,7 +815,34 @@ sub create_diagrams
         #------------------------------------------------------------------
 
         foreach my $othername (@{$vault{planlist}}) {
+
             next unless ( ($planname eq 'headofhouse') && ($othername eq 'A8-42-300') );
+
+            #my $fh = open_writable_file ("$displaydir/$planname/$othername.svg");
+            my $fh = open_writable_file ("newsample.svg");
+            print $fh create_svg (
+                {
+                    color   => 'green',
+                    points  => $vault{data}{$planname}{graph_marginal},
+                    legend  => "$planname marginal rate",
+                },
+                {
+                    color   => 'blue',
+                    points  => $vault{data}{$planname}{graph_effective},
+                    legend  => "$planname effective rate",
+                },
+                {
+                    color   => 'red',
+                    points  => $vault{data}{$othername}{graph_marginal},
+                    legend  => "$othername marginal rate",
+                },
+                {
+                    color   => 'orange',
+                    points  => $vault{data}{$othername}{graph_effective},
+                    legend  => "$othername effective rate",
+                },
+            );
+            undef $fh;
 
             my $fhtemp = open_writable_file ("newsample.pl");
             print $fhtemp Dumper ({
@@ -882,16 +854,6 @@ sub create_diagrams
             print $fhtemp Dumper ($vault{data}{$planname});
             print $fhtemp Dumper ($vault{data}{$othername});
             undef $fhtemp;
-
-            #my $fh = open_writable_file ("$displaydir/$planname/$othername.svg");
-            my $fh = open_writable_file ("newsample.svg");
-            print $fh create_svg (
-                green   => $vault{data}{$planname}{graph_marginal},
-                blue    => $vault{data}{$planname}{graph_effective},
-                red     => $vault{data}{$othername}{graph_marginal},
-                orange  => $vault{data}{$othername}{graph_effective},
-            );
-            undef $fh;
         }
 
         #------------------------------------------------------------------
