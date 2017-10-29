@@ -1,15 +1,15 @@
 {
    "plan_type" : "slanted",
    "inflections" : [
-      "0",
-      "250000"
+      0,
+      250000
    ],
    "calculatable" : {
-      "fullslant" : "62500",
+      "fullslant" : 62500,
       "highpoint" : 250000,
-      "marginal_slope" : "0.000136",
+      "marginal_slope" : 0.000136,
       "lowrate" : 8,
-      "real_slope" : "6.8e-05",
+      "real_slope" : 6.8e-05,
       "highrate" : 42,
       "lowpoint" : 0
    },

@@ -1,62 +1,62 @@
 {
    "plan_type" : "stepped",
    "inflections" : [
-      "0",
-      "9325",
-      "37950",
-      "91900",
-      "191650",
-      "416700",
-      "418400"
+      0,
+      9325,
+      37950,
+      91900,
+      191650,
+      416700,
+      418400
    ],
    "calculatable" : [
       {
          "rate" : 39.6,
          "high" : "top",
          "running_total" : 121505.25,
-         "low" : "418400",
+         "low" : 418400,
          "margin" : "-"
       },
       {
          "rate" : 35,
-         "high" : "418400",
+         "high" : 418400,
          "running_total" : 120910.25,
-         "low" : "416700",
+         "low" : 416700,
          "margin" : 1700
       },
       {
          "rate" : 33,
-         "high" : "416700",
+         "high" : 416700,
          "running_total" : 46643.75,
-         "low" : "191650",
+         "low" : 191650,
          "margin" : 225050
       },
       {
          "rate" : 28,
-         "high" : "191650",
+         "high" : 191650,
          "running_total" : 18713.75,
-         "low" : "91900",
+         "low" : 91900,
          "margin" : 99750
       },
       {
          "rate" : 25,
-         "high" : "91900",
+         "high" : 91900,
          "running_total" : 5226.25,
-         "low" : "37950",
+         "low" : 37950,
          "margin" : 53950
       },
       {
          "rate" : 15,
-         "high" : "37950",
+         "high" : 37950,
          "running_total" : 932.5,
-         "low" : "9325",
+         "low" : 9325,
          "margin" : 28625
       },
       {
          "rate" : 10,
-         "high" : "9325",
+         "high" : 9325,
          "running_total" : 0,
-         "low" : "0",
+         "low" : 0,
          "margin" : 9325
       }
    ],
