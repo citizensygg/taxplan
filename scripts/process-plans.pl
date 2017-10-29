@@ -811,9 +811,6 @@ sub create_diagrams
     _say 'entering create_diagrams';
 
     foreach my $planname (@{$vault{planlist}}) {
-        
-        #------------------------------------------------------------------
-
         foreach my $othername (@{$vault{planlist}}) {
 
             next unless ( ($planname eq 'headofhouse') && ($othername eq 'A8-42-300') );
@@ -843,21 +840,7 @@ sub create_diagrams
                 },
             );
             undef $fh;
-
-            my $fhtemp = open_writable_file ("newsample.pl");
-            print $fhtemp Dumper ({
-                green   => $vault{data}{$planname}{graph_marginal},
-                blue    => $vault{data}{$planname}{graph_effective},
-                red     => $vault{data}{$othername}{graph_marginal},
-                orange  => $vault{data}{$othername}{graph_effective},
-            });
-            print $fhtemp Dumper ($vault{data}{$planname});
-            print $fhtemp Dumper ($vault{data}{$othername});
-            undef $fhtemp;
         }
-
-        #------------------------------------------------------------------
-
     }
 
     #----------------------------------------------------------------------
