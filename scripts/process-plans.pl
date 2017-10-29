@@ -165,6 +165,9 @@ sub process_raw_to_usable
         elsif ($data->{plan_type} eq 'slanted') {
             process_raw_to_usable_slanted ($data);
         }
+        elsif ($data->{plan_type} eq 'flat') {
+            process_raw_to_usable_flat ($data);
+        }
         dump_json ("$plansdir/$planfile", $json, $data);
     }
 }
@@ -294,6 +297,20 @@ sub process_raw_to_usable_slanted
 }
 
 ###########################################################################
+
+sub process_raw_to_usable_flat
+{
+    my $data = shift;
+
+    my %details = ( %{$data->{raw_rates}} );
+    my %inflection_points = {};
+
+    _say ("flat calculations are" . Dumper (\%details));
+    $data->{calculatable}   = \%details;
+    $data->{inflections}    = [];
+}
+
+###########################################################################
 ###########################################################################
 
 sub amount_due
@@ -307,6 +324,9 @@ sub amount_due
 	}
     elsif ($plan->{plan_type} eq 'slanted') {
 		$plan->{due}{$income} = slanted_plan ($plan, $income);
+	}
+    elsif ($plan->{plan_type} eq 'flat') {
+		$plan->{due}{$income} = flat_plan ($plan, $income);
 	}
 
     return ($plan->{due}{$income});
@@ -349,6 +369,18 @@ sub slanted_plan
 	}
 	my $effective_rate = ($income > 0) ? $tax / $income * 100 : $details->{lowrate};
 	return ( [ $tax, $effective_rate, $marginal_rate ] );
+}
+
+###########################################################################
+
+sub flat_plan
+{
+	my ($plan, $income) = @_;
+
+    my $details = $plan->{calculatable};
+
+    my $tax = $details->{rate} * $income / 100;
+	return ( [ $tax, $details->{rate}, $details->{rate} ] );
 }
 
 ###########################################################################
@@ -469,6 +501,21 @@ sub print_display_stepped
 ###########################################################################
 
 sub print_display_slanted
+{
+    my ($fh, $data) = @_;
+
+    print $fh join ("\n",
+        '<h3>Temporary description</h3>',
+        '<pre>',
+        Dumper ($data->{calculatable}),
+        '</pre>',
+        '',
+    );
+}
+
+###########################################################################
+
+sub print_display_flat
 {
     my ($fh, $data) = @_;
 
@@ -729,6 +776,9 @@ sub document_plans
         elsif ($vault{data}{$planname}{plan_type} eq 'slanted') {
             print_display_slanted   ($fhp, $vault{data}{$planname});
         }
+        elsif ($vault{data}{$planname}{plan_type} eq 'flat') {
+            print_display_flat      ($fhp, $vault{data}{$planname});
+        }
 
         #TODO, this might work better as a form with a select box
         print $fhp "<h3>Compare to another plan</h3>\n<ul>\n";
@@ -787,6 +837,12 @@ sub calculate_diagram_points
             push (@{$plan->{graph_marginal}},
                   map { [ $_, $plan->{due}{$_}[2] ] }
                   ( $plan->{calculatable}{lowpoint}, $plan->{calculatable}{highpoint}, $MAXCHART )
+                 );
+        }
+        elsif ($plan->{plan_type} eq 'flat') {
+            push (@{$plan->{graph_marginal}},
+                  map { [ $_, $plan->{calculatable}{rate} ] }
+                  ( 0, $MAXCHART )
                  );
         }
         push (@{$plan->{graph_marginal}}, [ $MAXCHART, $MAXPERCENT ]);
