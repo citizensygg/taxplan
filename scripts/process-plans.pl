@@ -574,10 +574,17 @@ sub create_svg
 
     $graph->svg->text(
         x       =>                 $graph_margin + 10,
-        y       => $graph_height - $graph_margin + 20,
+        y       => $graph_height - $graph_margin + 15,
         stroke  => 'black',
         fill    => 'black',
         -cdata  => 0,
+    );
+    $graph->svg->text(
+        x       => $graph_width / 2              - 20,
+        y       => $graph_height - $graph_margin + 15,
+        stroke  => 'black',
+        fill    => 'black',
+        -cdata  => $MAXCHART / 2,
     );
     $graph->svg->text(
         x       => $graph_width  - $graph_margin - 40,
@@ -586,12 +593,20 @@ sub create_svg
         fill    => 'black',
         -cdata  => $MAXCHART,
     );
+
     $graph->svg->text(
         x       => 10,
         y       => $graph_height - $graph_margin - 10,
         stroke  => 'black',
         fill    => 'black',
         -cdata  => 0,
+    );
+    $graph->svg->text(
+        x       => 10,
+        y       => $graph_height / 2 + 10,
+        stroke  => 'black',
+        fill    => 'black',
+        -cdata  => $MAXPERCENT / 2,
     );
     $graph->svg->text(
         x       => 10,
@@ -839,6 +854,10 @@ sub calculate_diagram_points
         my $plan = $vault{data}{$planname};
 
         $plan->{graph_marginal}  = [ [0,0] ];
+        $plan->{graph_effective} = [ [0,0] ];
+
+        #------------------------------------------------------------------
+
         if ($plan->{plan_type} eq 'stepped') {
             foreach my $row (reverse @{$plan->{calculatable}}) {
                 push (@{$plan->{graph_marginal}},
@@ -847,30 +866,41 @@ sub calculate_diagram_points
                       ( $row->{low}, ($row->{high} eq 'top') ? $MAXCHART : $row->{high} )
                      );
             }
+            foreach my $income (sort { $a <=> $b }
+                                map { ( $MAXCHART < $_ ) ? () : ($_) }
+                                keys %{$plan->{due}}
+                               ) {
+                push (@{$plan->{graph_effective}}, [ $income, $plan->{due}{$income}[1] ]);
+            }
         }
         elsif ($plan->{plan_type} eq 'slanted') {
             push (@{$plan->{graph_marginal}},
                   map { [ $_, $plan->{due}{$_}[2] ] }
                   ( $plan->{calculatable}{lowpoint}, $plan->{calculatable}{highpoint}, $MAXCHART )
                  );
+            foreach my $income ($plan->{calculatable}{lowpoint}, $plan->{calculatable}{highpoint},
+                                ( sort { $a <=> $b }
+                                  map { ( ($plan->{calculatable}{highpoint} < $_) && ($_ <= $MAXCHART) ) ? ($_) : () }
+                                  keys %{$plan->{due}}
+                                ),
+                               ) {
+                push (@{$plan->{graph_effective}}, [ $income, $plan->{due}{$income}[1] ]);
+            }
         }
         elsif ($plan->{plan_type} eq 'flat') {
             push (@{$plan->{graph_marginal}},
                   map { [ $_, $plan->{calculatable}{rate} ] }
                   ( 0, $MAXCHART )
                  );
+            push (@{$plan->{graph_effective}},
+                  map { [ $_, $plan->{calculatable}{rate} ] }
+                  ( 0, $MAXCHART )
+                 );
         }
-        push (@{$plan->{graph_marginal}}, [ $MAXCHART, $MAXPERCENT ]);
 
         #------------------------------------------------------------------
 
-        $plan->{graph_effective} = [ [0,0] ];
-        foreach my $income (sort { $a <=> $b }
-                            map { ( $MAXCHART < $_ ) ? () : ($_) }
-                            keys %{$plan->{due}}
-                           ) {
-            push (@{$plan->{graph_effective}}, [ $income, $plan->{due}{$income}[1] ]);
-        }
+        push (@{$plan->{graph_marginal}},  [ $MAXCHART, $MAXPERCENT ]);
         push (@{$plan->{graph_effective}}, [ $MAXCHART, $MAXPERCENT ]);
     }
 }
