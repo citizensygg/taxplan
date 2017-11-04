@@ -65,9 +65,9 @@ my @slices = (
 
 our $rawjsondir = '../data/rawplans';
 our $plansdir   = '../data/details';
-our $displaydir = '../data/display';
+our $displaydir = '../docs/display';
 our $MAXCHART   = 500000; #stop the linecharts before incomes get too big
-our $MAXPERCENT = 50;     #stop the linecharts before incomes get too big
+our $MAXPERCENT = 60;     #stop the linecharts before incomes get too big
 
 our %vault;
 
@@ -388,12 +388,15 @@ sub flat_plan
 
 sub top_nav_home
 {
-    return (qq~<a href="/taxplan/index.html">Home</a>~);
+    return (
+            #qq~<a href="/index.html">Home</a> -&gt; ~,
+            qq~<a href="/taxplan/index.html">Taxplans</a>~
+           );
 }
 
 sub top_nav_plans
 {
-    return (qq~ -&gt; <a href="/taxplan/data/display/index.html">Plans</a>~);
+    return (qq~ -&gt; <a href="/taxplan/display/index.html">Plan List</a>~);
 }
 
 sub top_nav_plan
@@ -478,6 +481,10 @@ sub print_display_stepped
 
     print $fh join ("\n",
         '<table>',
+        ( map { "<tr><th>$_</th><td>$data->{$_}</td></tr>" } qw (plan_name plan_type description)),
+        '</table>',
+        '',
+        '<table>',
         '<tr>',
         ( map { "<th>$_</th>" } ("From", "To", "Marginal Rate", "Total", "Rate")),
         '</tr>',
@@ -505,6 +512,10 @@ sub print_display_slanted
     my ($fh, $data) = @_;
 
     print $fh join ("\n",
+        '<table>',
+        ( map { "<tr><th>$_</th><td>$data->{$_}</td></tr>" } qw (plan_name plan_type description)),
+        '</table>',
+        '',
         '<h3>Temporary description</h3>',
         '<pre>',
         Dumper ($data->{calculatable}),
@@ -520,6 +531,10 @@ sub print_display_flat
     my ($fh, $data) = @_;
 
     print $fh join ("\n",
+        '<table>',
+        ( map { "<tr><th>$_</th><td>$data->{$_}</td></tr>" } qw (plan_name plan_type description)),
+        '</table>',
+        '',
         '<h3>Temporary description</h3>',
         '<pre>',
         Dumper ($data->{calculatable}),
@@ -565,7 +580,7 @@ sub create_svg
         -cdata  => 0,
     );
     $graph->svg->text(
-        x       => $graph_width  - $graph_margin - 70,
+        x       => $graph_width  - $graph_margin - 40,
         y       => $graph_height - $graph_margin + 15,
         stroke  => 'black',
         fill    => 'black',
@@ -867,33 +882,65 @@ sub create_diagrams
     _say 'entering create_diagrams';
 
     foreach my $planname (@{$vault{planlist}}) {
-        foreach my $othername (@{$vault{planlist}}) {
+        _say "    outerloop $planname";
 
-            next unless ( ($planname eq 'headofhouse') && ($othername eq 'A8-42-300') );
+        my @before = (($vault{data}{$planname}{plan_type} eq 'flat')
+                      ? (
+                         {
+                            color   => 'green',
+                            points  => $vault{data}{$planname}{graph_marginal},
+                            legend  => "$planname rate",
+                         },
+                        )
+                      : (
+                         {
+                            color   => 'green',
+                            points  => $vault{data}{$planname}{graph_marginal},
+                            legend  => "$planname marginal rate",
+                         },
+                         {
+                            color   => 'blue',
+                            points  => $vault{data}{$planname}{graph_effective},
+                            legend  => "$planname effective rate",
+                         },
+                        )
+                     );
+        foreach my $othername (@{$vault{planlist}}) {
+            _say "        outerloop $othername";
+
+            next unless ( ($planname eq '2017-household') && ($othername eq 'Slant-8-42-300') );
+            #next unless ( ($planname eq '2017-household') && ($othername eq '2017-household') );
+            _say "            print this one";
+
+            my @after = (($vault{data}{$othername}{plan_type} eq 'flat')
+                         ? (
+                            {
+                                color   => 'red',
+                                points  => $vault{data}{$othername}{graph_marginal},
+                                legend  => "$othername rate",
+                            },
+                           )
+                         : (
+                            {
+                                color   => 'red',
+                                points  => $vault{data}{$othername}{graph_marginal},
+                                legend  => "$othername marginal rate",
+                            },
+                            {
+                                color   => 'orange',
+                                points  => $vault{data}{$othername}{graph_effective},
+                                legend  => "$othername effective rate",
+                            },
+                           )
+                        );
 
             #my $fh = open_writable_file ("$displaydir/$planname/$othername.svg");
             my $fh = open_writable_file ("newsample.svg");
             print $fh create_svg (
-                {
-                    color   => 'green',
-                    points  => $vault{data}{$planname}{graph_marginal},
-                    legend  => "$planname marginal rate",
-                },
-                {
-                    color   => 'blue',
-                    points  => $vault{data}{$planname}{graph_effective},
-                    legend  => "$planname effective rate",
-                },
-                {
-                    color   => 'red',
-                    points  => $vault{data}{$othername}{graph_marginal},
-                    legend  => "$othername marginal rate",
-                },
-                {
-                    color   => 'orange',
-                    points  => $vault{data}{$othername}{graph_effective},
-                    legend  => "$othername effective rate",
-                },
+                                  @before,
+                                  ($planname eq $othername)
+                                  ? ()
+                                  : @after,
             );
             undef $fh;
         }
