@@ -1,0 +1,11 @@
+{
+   "plan_type" : "slanted",
+   "raw_rates" : {
+      "highpoint" : 250000,
+      "lowrate" : 8,
+      "highrate" : 38,
+      "lowpoint" : 0
+   },
+   "plan_name" : "Slant-8-38-250",
+   "description" : "A slanted tax starting at 8% and rising to 38% on when taxable income reaches $250,000 then becoming flat from there"
+}
