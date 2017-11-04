@@ -489,6 +489,9 @@ sub print_display_stepped
         ( map { "<th>$_</th>" } ("From", "To", "Marginal Rate", "Total", "Rate")),
         '</tr>',
         '',
+        qq~<img src="$data->{plan_name}.svg" alt="graphical representation of the rates">~,
+        '',
+        '',
     );
     foreach my $row (reverse @{$data->{calculatable}}) {
         print $fh join ("\n",
@@ -516,6 +519,9 @@ sub print_display_slanted
         ( map { "<tr><th>$_</th><td>$data->{$_}</td></tr>" } qw (plan_name plan_type description)),
         '</table>',
         '',
+        qq~<img src="$data->{plan_name}.svg" alt="graphical representation of the rates">~,
+        '',
+        '',
         '<h3>Temporary description</h3>',
         '<pre>',
         Dumper ($data->{calculatable}),
@@ -534,6 +540,9 @@ sub print_display_flat
         '<table>',
         ( map { "<tr><th>$_</th><td>$data->{$_}</td></tr>" } qw (plan_name plan_type description)),
         '</table>',
+        '',
+        qq~<img src="$data->{plan_name}.svg" alt="graphical representation of the rates">~,
+        '',
         '',
         '<h3>Temporary description</h3>',
         '<pre>',
@@ -572,6 +581,8 @@ sub create_svg
         'stroke-width'      => 2,           #and 2px thick
     );
 
+    #----------------------------------------------------------------------
+
     $graph->svg->text(
         x       =>                 $graph_margin + 10,
         y       => $graph_height - $graph_margin + 15,
@@ -593,6 +604,8 @@ sub create_svg
         fill    => 'black',
         -cdata  => $MAXCHART,
     );
+
+    #----------------------------------------------------------------------
 
     $graph->svg->text(
         x       => 10,
@@ -696,6 +709,9 @@ sub print_compare_numbers
     #----------------------------------------------------------------------
 
 print $fh <<EOF;
+
+<img src="$dataB->{plan_name}.svg" alt="graphical representation of the rates">
+
 <table>
 <tr>
    <th rowspan="2">Income</th>
@@ -938,9 +954,9 @@ sub create_diagrams
         foreach my $othername (@{$vault{planlist}}) {
             _say "        outerloop $othername";
 
-            next unless ( ($planname eq '2017-household') && ($othername eq 'Slant-8-42-300') );
+            #next unless ( ($planname eq '2017-household') && ($othername eq 'Slant-8-42-300') );
             #next unless ( ($planname eq '2017-household') && ($othername eq '2017-household') );
-            _say "            print this one";
+            #_say "            print this one";
 
             my @after = (($vault{data}{$othername}{plan_type} eq 'flat')
                          ? (
@@ -964,8 +980,8 @@ sub create_diagrams
                            )
                         );
 
-            #my $fh = open_writable_file ("$displaydir/$planname/$othername.svg");
-            my $fh = open_writable_file ("newsample.svg");
+            my $fh = open_writable_file ("$displaydir/$planname/$othername.svg");
+            #my $fh = open_writable_file ("newsample.svg");
             print $fh create_svg (
                                   @before,
                                   ($planname eq $othername)
