@@ -19,6 +19,6 @@
       "highrate" : 42,
       "lowpoint" : 0
    },
-   "plan_name" : "Slanted-8-42-300",
+   "plan_name" : "Slant-8-42-300",
    "description" : "A slanted tax starting at 8% and rising to 42% on when taxable income reaches $300,000 then becoming flat from there"
 }
