@@ -1,0 +1,95 @@
+{
+   "plan_type" : "stepped",
+   "inflections" : [
+      0,
+      9325,
+      37950,
+      76550,
+      116675,
+      208350,
+      235350
+   ],
+   "calculatable" : [
+      {
+         "rate" : 39.6,
+         "high" : "top",
+         "running_total" : 65814,
+         "low" : 235350,
+         "margin" : "-"
+      },
+      {
+         "rate" : 35,
+         "high" : 235350,
+         "running_total" : 56364,
+         "low" : 208350,
+         "margin" : 27000
+      },
+      {
+         "rate" : 33,
+         "high" : 208350,
+         "running_total" : 26111.25,
+         "low" : 116675,
+         "margin" : 91675
+      },
+      {
+         "rate" : 28,
+         "high" : 116675,
+         "running_total" : 14876.25,
+         "low" : 76550,
+         "margin" : 40125
+      },
+      {
+         "rate" : 25,
+         "high" : 76550,
+         "running_total" : 5226.25,
+         "low" : 37950,
+         "margin" : 38600
+      },
+      {
+         "rate" : 15,
+         "high" : 37950,
+         "running_total" : 932.5,
+         "low" : 9325,
+         "margin" : 28625
+      },
+      {
+         "rate" : 10,
+         "high" : 9325,
+         "running_total" : 0,
+         "low" : 0,
+         "margin" : 9325
+      }
+   ],
+   "raw_rates" : [
+      [
+         0,
+         10
+      ],
+      [
+         9325,
+         15
+      ],
+      [
+         37950,
+         25
+      ],
+      [
+         76550,
+         28
+      ],
+      [
+         116675,
+         33
+      ],
+      [
+         208350,
+         35
+      ],
+      [
+         235350,
+         39.6
+      ]
+   ],
+   "plan_name" : "2017-separate",
+   "description" : "Actual rates from 2017 for married file separately"
+}

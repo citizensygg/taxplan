@@ -1,0 +1,119 @@
+{
+   "plan_type" : "stepped",
+   "inflections" : [
+      0,
+      18450,
+      74900,
+      151200,
+      230450,
+      250000,
+      500000,
+      2000000,
+      10000000
+   ],
+   "calculatable" : [
+      {
+         "rate" : 52,
+         "high" : "top",
+         "running_total" : 4635529,
+         "low" : 10000000,
+         "margin" : "-"
+      },
+      {
+         "rate" : 48,
+         "high" : 10000000,
+         "running_total" : 795529,
+         "low" : 2000000,
+         "margin" : 8000000
+      },
+      {
+         "rate" : 43,
+         "high" : 2000000,
+         "running_total" : 150529,
+         "low" : 500000,
+         "margin" : 1500000
+      },
+      {
+         "rate" : 37,
+         "high" : 500000,
+         "running_total" : 58029,
+         "low" : 250000,
+         "margin" : 250000
+      },
+      {
+         "rate" : 33,
+         "high" : 250000,
+         "running_total" : 51577.5,
+         "low" : 230450,
+         "margin" : 19550
+      },
+      {
+         "rate" : 28,
+         "high" : 230450,
+         "running_total" : 29387.5,
+         "low" : 151200,
+         "margin" : 79250
+      },
+      {
+         "rate" : 25,
+         "high" : 151200,
+         "running_total" : 10312.5,
+         "low" : 74900,
+         "margin" : 76300
+      },
+      {
+         "rate" : 15,
+         "high" : 74900,
+         "running_total" : 1845,
+         "low" : 18450,
+         "margin" : 56450
+      },
+      {
+         "rate" : 10,
+         "high" : 18450,
+         "running_total" : 0,
+         "low" : 0,
+         "margin" : 18450
+      }
+   ],
+   "raw_rates" : [
+      [
+         0,
+         10
+      ],
+      [
+         18450,
+         15
+      ],
+      [
+         74900,
+         25
+      ],
+      [
+         151200,
+         28
+      ],
+      [
+         230450,
+         33
+      ],
+      [
+         250000,
+         37
+      ],
+      [
+         500000,
+         43
+      ],
+      [
+         2000000,
+         48
+      ],
+      [
+         10000000,
+         52
+      ]
+   ],
+   "plan_name" : "2016-Bernie_Sanders",
+   "description" : "Proposed taxes from Bernie Sanders during 2016 presidental campaign"
+}
