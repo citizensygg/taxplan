@@ -6,6 +6,6 @@
       "highrate" : 40,
       "lowpoint" : 0
    },
-   "plan_name" : "Slanted-6-40-250",
+   "plan_name" : "Slant-6-40-250",
    "description" : "A slanted tax starting at 6% and rising to 40% on when taxable income reaches $250,000 then becoming flat from there"
 }
