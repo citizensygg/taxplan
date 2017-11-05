@@ -696,10 +696,7 @@ sub print_compare_numbers
                 quickformat_percent ($valuesB->[1]),
                 quickformat_percent ($valuesB->[2]),
 
-                quickformat_percent (($valuesB->[0])
-                                     ? ( ($valuesB->[0] - $valuesA->[0]) / $valuesB->[0] * 100)
-                                     : 0
-                                    ),
+                quickformat_percent ($valuesB->[1] - $valuesA->[1]),
             ),
             '</tr>',
             '',
