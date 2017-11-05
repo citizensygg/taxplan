@@ -446,6 +446,7 @@ sub print_compare_top
         top_nav_plan ($dataA->{plan_name}),
         '<hr>',
         "<h1>Comparison of taxplans: $dataA->{plan_name} vs $dataB->{plan_name}</h1>",
+        qq~<h4>Reverse the comparison <a href="../$dataB->{plan_name}/$dataA->{plan_name}.html">$dataB->{plan_name} vs $dataA->{plan_name}</a></h4>~,
         '',
     );
 
