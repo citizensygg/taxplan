@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg height="300" width="800" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<g id="n8206258">
-		<g id="axis5308838" />
-		<g id="axisn2197519">
+	<g id="n4276783">
+		<g id="axis2232424" />
+		<g id="axisn6180316">
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="770" y1="270" y2="270" />
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="30" y2="270" />
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="270" y2="273.75" />
@@ -68,9 +68,9 @@
 	<text fill="black" stroke="black" x="10" y="260">0</text>
 	<text fill="black" stroke="black" x="10" y="160">30</text>
 	<text fill="black" stroke="black" x="10" y="45">60</text>
-	<g id="n3541039">
-		<g id="line5531608" />
-		<g id="linen8654030">
+	<g id="n3100323">
+		<g id="line7522752" />
+		<g id="linen3121125">
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="30" y1="270" y2="238" />
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="437" y1="238" y2="118" />
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="437" x2="770" y1="118" y2="118" />
@@ -78,9 +78,9 @@
 		</g>
 	</g>
 	<text fill="green" stroke="green" x="50" y="50">Slant-8-38-275 marginal rate</text>
-	<g id="n5913865">
-		<g id="line9069947" />
-		<g id="linen0013030">
+	<g id="n5594574">
+		<g id="line7121045" />
+		<g id="linen2888035">
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="30" y1="270" y2="238" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="437" y1="238" y2="178" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="437" x2="444.4" y1="178" y2="176.928571428571" />

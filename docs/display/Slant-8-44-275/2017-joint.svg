@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg height="300" width="800" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<g id="n6830985">
-		<g id="axis7558708" />
-		<g id="axisn2745005">
+	<g id="n3307223">
+		<g id="axis7856292" />
+		<g id="axisn1075281">
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="770" y1="270" y2="270" />
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="30" y2="270" />
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="270" y2="273.75" />
@@ -68,9 +68,9 @@
 	<text fill="black" stroke="black" x="10" y="260">0</text>
 	<text fill="black" stroke="black" x="10" y="160">30</text>
 	<text fill="black" stroke="black" x="10" y="45">60</text>
-	<g id="n1441707">
-		<g id="line5525993" />
-		<g id="linen0458131">
+	<g id="n0664885">
+		<g id="line8909191" />
+		<g id="linen0408133">
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="30" y1="270" y2="238" />
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="437" y1="238" y2="93.9999999999999" />
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="437" x2="770" y1="93.9999999999999" y2="94" />
@@ -78,9 +78,9 @@
 		</g>
 	</g>
 	<text fill="green" stroke="green" x="50" y="50">Slant-8-44-275 marginal rate</text>
-	<g id="n3852325">
-		<g id="line8315560" />
-		<g id="linen1376526">
+	<g id="n3748911">
+		<g id="line3378364" />
+		<g id="linen3249753">
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="30" y1="270" y2="238" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="437" y1="238" y2="166" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="437" x2="444.4" y1="166" y2="164.714285714286" />
@@ -98,9 +98,9 @@
 		</g>
 	</g>
 	<text fill="blue" stroke="blue" x="50" y="70">Slant-8-44-275 effective rate</text>
-	<g id="n7928527">
-		<g id="line3786694" />
-		<g id="linen7776046">
+	<g id="n0662212">
+		<g id="line9135619" />
+		<g id="linen3680572">
 			<line style="fill: red; stroke: red; stroke-width: 2" x1="30" x2="30" y1="270" y2="230" />
 			<line style="fill: red; stroke: red; stroke-width: 2" x1="30" x2="57.602" y1="230" y2="230" />
 			<line style="fill: red; stroke: red; stroke-width: 2" x1="57.602" x2="57.602" y1="230" y2="210" />
@@ -119,9 +119,9 @@
 		</g>
 	</g>
 	<text fill="red" stroke="red" x="50" y="90">2017-joint marginal rate</text>
-	<g id="n3428348">
-		<g id="line2427309" />
-		<g id="linen8433565">
+	<g id="n8354884">
+		<g id="line5058383" />
+		<g id="linen2975551">
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="30" x2="30" y1="270" y2="230" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="30" x2="37.4" y1="230" y2="230" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="37.4" x2="43.801" y1="230" y2="230" />

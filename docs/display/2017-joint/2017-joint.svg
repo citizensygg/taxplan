@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg height="300" width="800" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<g id="n3186981">
-		<g id="axis9813459" />
-		<g id="axisn8721149">
+	<g id="n7758675">
+		<g id="axis1050823" />
+		<g id="axisn0065568">
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="770" y1="270" y2="270" />
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="30" y2="270" />
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="270" y2="273.75" />
@@ -68,9 +68,9 @@
 	<text fill="black" stroke="black" x="10" y="260">0</text>
 	<text fill="black" stroke="black" x="10" y="160">30</text>
 	<text fill="black" stroke="black" x="10" y="45">60</text>
-	<g id="n8315334">
-		<g id="line5416394" />
-		<g id="linen2482426">
+	<g id="n1305511">
+		<g id="line5187172" />
+		<g id="linen0093837">
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="30" y1="270" y2="230" />
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="57.602" y1="230" y2="230" />
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="57.602" x2="57.602" y1="230" y2="210" />
@@ -89,9 +89,9 @@
 		</g>
 	</g>
 	<text fill="green" stroke="green" x="50" y="50">2017-joint marginal rate</text>
-	<g id="n4228451">
-		<g id="line3265767" />
-		<g id="linen0788695">
+	<g id="n7550642">
+		<g id="line8103575" />
+		<g id="linen7696461">
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="30" y1="270" y2="230" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="37.4" y1="230" y2="230" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="37.4" x2="43.801" y1="230" y2="230" />
