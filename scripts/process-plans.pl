@@ -66,9 +66,10 @@ my @slices = (
 our $rawjsondir = '../data/rawplans';
 our $plansdir   = '../data/details';
 our $displaydir = '../docs/display';
-our $MAXCHART   = 500000; #stop the linecharts before incomes get too big
-our $MAXPERCENT = 60;     #stop the linecharts before incomes get too big
-
+our @graphsettings = (
+                       # max income (something from @slices) / max percent (multiple of 10) / suffix to append to svg file name
+                      [    500000, 60, '' ],
+                     );
 our %vault;
 
 
@@ -558,7 +559,7 @@ sub print_display_flat
 sub create_svg
 {
     _say 'entering create_svg';
-    my @lines = @_;
+    my ($maxchart, $maxpercent, @lines) = @_;
 
     my $graph_width     = 800;
     my $graph_height    = 300;
@@ -568,18 +569,18 @@ sub create_svg
     my $graph = SVG::Graph->new (width=>$graph_width, height=>$graph_height, margin=>30);
 
     #----------------------------------------------------------------------
-    #use 0,0 and $MAXCHART,$MAXPERCENT to force the box to always be the same size
+    #use 0,0 and $maxchart,$maxpercent to force the box to always be the same size
 
     my $frame = $graph->add_frame;
     my @data = map { SVG::Graph::Data::Datum->new ( x => $_->[0], y => $_->[1]) }
-               ( [0, 0] , [ $MAXCHART, $MAXPERCENT] );
+               ( [0, 0] , [ $maxchart, $maxpercent] );
     $frame->add_data(SVG::Graph::Data->new(data => \@data));
     $frame->add_glyph(
-        'axis',                             #add an axis glyph
-        'x_absolute_ticks'  => 50000,       #with ticks on the x axis
-        'y_absolute_ticks'  => 10,          #and  ticks on the y axis
-        'stroke'            => 'black',     #draw the axis black
-        'stroke-width'      => 2,           #and 2px thick
+        'axis',                                 #add an axis glyph
+        'x_absolute_ticks'  => $maxchart / 10,  #with ticks on the x axis
+        'y_absolute_ticks'  => 10,              #and  ticks on the y axis
+        'stroke'            => 'black',         #draw the axis black
+        'stroke-width'      => 2,               #and 2px thick
     );
 
     #----------------------------------------------------------------------
@@ -596,14 +597,14 @@ sub create_svg
         y       => $graph_height - $graph_margin + 15,
         stroke  => 'black',
         fill    => 'black',
-        -cdata  => $MAXCHART / 2,
+        -cdata  => $maxchart / 2,
     );
     $graph->svg->text(
         x       => $graph_width  - $graph_margin - 40,
         y       => $graph_height - $graph_margin + 15,
         stroke  => 'black',
         fill    => 'black',
-        -cdata  => $MAXCHART,
+        -cdata  => $maxchart,
     );
 
     #----------------------------------------------------------------------
@@ -620,14 +621,14 @@ sub create_svg
         y       => $graph_height / 2 + 10,
         stroke  => 'black',
         fill    => 'black',
-        -cdata  => $MAXPERCENT / 2,
+        -cdata  => $maxpercent / 2,
     );
     $graph->svg->text(
         x       => 10,
         y       => $graph_margin + 15,
         stroke  => 'black',
         fill    => 'black',
-        -cdata  => $MAXPERCENT,
+        -cdata  => $maxpercent,
     );
 
     #----------------------------------------------------------------------
@@ -863,6 +864,8 @@ sub document_plans
 sub calculate_diagram_points
 {
     _say 'entering calculate_diagram_points';
+    my $settings = shift;
+    my ($maxchart, $maxpercent, $suffix) = @{$settings};
 
     foreach my $planname (@{$vault{planlist}}) {
         my $plan = $vault{data}{$planname};
@@ -876,12 +879,12 @@ sub calculate_diagram_points
             foreach my $row (reverse @{$plan->{calculatable}}) {
                 push (@{$plan->{graph_marginal}},
                       map { [ $_, $row->{rate} ] }
-#                      ( ($row->{high} eq 'top') ? $MAXCHART : $row->{high} )
-                      ( $row->{low}, ($row->{high} eq 'top') ? $MAXCHART : $row->{high} )
+#                      ( ($row->{high} eq 'top') ? $maxchart : $row->{high} )
+                      ( $row->{low}, ($row->{high} eq 'top') ? $maxchart : $row->{high} )
                      );
             }
             foreach my $income (sort { $a <=> $b }
-                                map { ( $MAXCHART < $_ ) ? () : ($_) }
+                                map { ( $maxchart < $_ ) ? () : ($_) }
                                 keys %{$plan->{due}}
                                ) {
                 push (@{$plan->{graph_effective}}, [ $income, $plan->{due}{$income}[1] ]);
@@ -890,11 +893,11 @@ sub calculate_diagram_points
         elsif ($plan->{plan_type} eq 'slanted') {
             push (@{$plan->{graph_marginal}},
                   map { [ $_, $plan->{due}{$_}[2] ] }
-                  ( $plan->{calculatable}{lowpoint}, $plan->{calculatable}{highpoint}, $MAXCHART )
+                  ( $plan->{calculatable}{lowpoint}, $plan->{calculatable}{highpoint}, $maxchart )
                  );
             foreach my $income ($plan->{calculatable}{lowpoint}, $plan->{calculatable}{highpoint},
                                 ( sort { $a <=> $b }
-                                  map { ( ($plan->{calculatable}{highpoint} < $_) && ($_ <= $MAXCHART) ) ? ($_) : () }
+                                  map { ( ($plan->{calculatable}{highpoint} < $_) && ($_ <= $maxchart) ) ? ($_) : () }
                                   keys %{$plan->{due}}
                                 ),
                                ) {
@@ -904,18 +907,18 @@ sub calculate_diagram_points
         elsif ($plan->{plan_type} eq 'flat') {
             push (@{$plan->{graph_marginal}},
                   map { [ $_, $plan->{calculatable}{rate} ] }
-                  ( 0, $MAXCHART )
+                  ( 0, $maxchart )
                  );
             push (@{$plan->{graph_effective}},
                   map { [ $_, $plan->{calculatable}{rate} ] }
-                  ( 0, $MAXCHART )
+                  ( 0, $maxchart )
                  );
         }
 
         #------------------------------------------------------------------
 
-        push (@{$plan->{graph_marginal}},  [ $MAXCHART, $MAXPERCENT ]);
-        push (@{$plan->{graph_effective}}, [ $MAXCHART, $MAXPERCENT ]);
+        push (@{$plan->{graph_marginal}},  [ $maxchart, $maxpercent ]);
+        push (@{$plan->{graph_effective}}, [ $maxchart, $maxpercent ]);
     }
 }
 
@@ -923,6 +926,8 @@ sub calculate_diagram_points
 
 sub create_diagrams
 {
+    my $settings = shift;
+    my ($maxchart, $maxpercent, $suffix) = @{$settings};
     _say 'entering create_diagrams';
 
     foreach my $planname (@{$vault{planlist}}) {
@@ -978,9 +983,10 @@ sub create_diagrams
                            )
                         );
 
-            my $fh = open_writable_file ("$displaydir/$planname/$othername.svg");
+            my $fh = open_writable_file ("$displaydir/$planname/$othername$suffix.svg");
             #my $fh = open_writable_file ("newsample.svg");
             print $fh create_svg (
+                                  $maxchart, $maxpercent,
                                   @before,
                                   ($planname eq $othername)
                                   ? ()
@@ -1039,6 +1045,8 @@ sub load_all_plans_data
         _say ("   now on $planname");
         $vault{data}{$planname} = slurp_json ("$plansdir/$planname.json", $json);
         $vault{data}{$planname}{due} = {};
+        #$vault{data}{$planname}{graph_marginal} = {};
+        #$vault{data}{$planname}{graph_effective} = {};
     }
 }
 
@@ -1094,8 +1102,10 @@ if (exists $opts{raw}) {
 if ($opts{mode} eq 'build') {
     load_all_plans_data ();
     document_plans ();
-    calculate_diagram_points ();
-    create_diagrams ();
+    foreach my $settings (@graphsettings) {
+        calculate_diagram_points ($settings);
+        create_diagrams ($settings);
+    }
 }
 elsif ($opts{mode} eq 'single') {
     display_plan ($opts{before});
