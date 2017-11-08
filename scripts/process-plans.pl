@@ -870,14 +870,14 @@ sub calculate_diagram_points
     foreach my $planname (@{$vault{planlist}}) {
         my $plan = $vault{data}{$planname};
 
-        $plan->{graph_marginal}  = [ [0,0] ];
-        $plan->{graph_effective} = [ [0,0] ];
+        $plan->{graph_marginal}{$maxchart}  = [ [0,0] ];
+        $plan->{graph_effective}{$maxchart} = [ [0,0] ];
 
         #------------------------------------------------------------------
 
         if ($plan->{plan_type} eq 'stepped') {
             foreach my $row (reverse @{$plan->{calculatable}}) {
-                push (@{$plan->{graph_marginal}},
+                push (@{$plan->{graph_marginal}{$maxchart}},
                       map { [ $_, $row->{rate} ] }
 #                      ( ($row->{high} eq 'top') ? $maxchart : $row->{high} )
                       ( $row->{low}, ($row->{high} eq 'top') ? $maxchart : $row->{high} )
@@ -887,11 +887,11 @@ sub calculate_diagram_points
                                 map { ( $maxchart < $_ ) ? () : ($_) }
                                 keys %{$plan->{due}}
                                ) {
-                push (@{$plan->{graph_effective}}, [ $income, $plan->{due}{$income}[1] ]);
+                push (@{$plan->{graph_effective}{$maxchart}}, [ $income, $plan->{due}{$income}[1] ]);
             }
         }
         elsif ($plan->{plan_type} eq 'slanted') {
-            push (@{$plan->{graph_marginal}},
+            push (@{$plan->{graph_marginal}{$maxchart}},
                   map { [ $_, $plan->{due}{$_}[2] ] }
                   ( $plan->{calculatable}{lowpoint}, $plan->{calculatable}{highpoint}, $maxchart )
                  );
@@ -901,15 +901,15 @@ sub calculate_diagram_points
                                   keys %{$plan->{due}}
                                 ),
                                ) {
-                push (@{$plan->{graph_effective}}, [ $income, $plan->{due}{$income}[1] ]);
+                push (@{$plan->{graph_effective}{$maxchart}}, [ $income, $plan->{due}{$income}[1] ]);
             }
         }
         elsif ($plan->{plan_type} eq 'flat') {
-            push (@{$plan->{graph_marginal}},
+            push (@{$plan->{graph_marginal}{$maxchart}},
                   map { [ $_, $plan->{calculatable}{rate} ] }
                   ( 0, $maxchart )
                  );
-            push (@{$plan->{graph_effective}},
+            push (@{$plan->{graph_effective}{$maxchart}},
                   map { [ $_, $plan->{calculatable}{rate} ] }
                   ( 0, $maxchart )
                  );
@@ -917,8 +917,8 @@ sub calculate_diagram_points
 
         #------------------------------------------------------------------
 
-        push (@{$plan->{graph_marginal}},  [ $maxchart, $maxpercent ]);
-        push (@{$plan->{graph_effective}}, [ $maxchart, $maxpercent ]);
+        push (@{$plan->{graph_marginal}{$maxchart}},  [ $maxchart, $maxpercent ]);
+        push (@{$plan->{graph_effective}{$maxchart}}, [ $maxchart, $maxpercent ]);
     }
 }
 
@@ -937,19 +937,19 @@ sub create_diagrams
                       ? (
                          {
                             color   => 'green',
-                            points  => $vault{data}{$planname}{graph_marginal},
+                            points  => $vault{data}{$planname}{graph_marginal}{$maxchart},
                             legend  => "$planname rate",
                          },
                         )
                       : (
                          {
                             color   => 'green',
-                            points  => $vault{data}{$planname}{graph_marginal},
+                            points  => $vault{data}{$planname}{graph_marginal}{$maxchart},
                             legend  => "$planname marginal rate",
                          },
                          {
                             color   => 'blue',
-                            points  => $vault{data}{$planname}{graph_effective},
+                            points  => $vault{data}{$planname}{graph_effective}{$maxchart},
                             legend  => "$planname effective rate",
                          },
                         )
@@ -965,19 +965,19 @@ sub create_diagrams
                          ? (
                             {
                                 color   => 'red',
-                                points  => $vault{data}{$othername}{graph_marginal},
+                                points  => $vault{data}{$othername}{graph_marginal}{$maxchart},
                                 legend  => "$othername rate",
                             },
                            )
                          : (
                             {
                                 color   => 'red',
-                                points  => $vault{data}{$othername}{graph_marginal},
+                                points  => $vault{data}{$othername}{graph_marginal}{$maxchart},
                                 legend  => "$othername marginal rate",
                             },
                             {
                                 color   => 'orange',
-                                points  => $vault{data}{$othername}{graph_effective},
+                                points  => $vault{data}{$othername}{graph_effective}{$maxchart},
                                 legend  => "$othername effective rate",
                             },
                            )
@@ -1045,8 +1045,8 @@ sub load_all_plans_data
         _say ("   now on $planname");
         $vault{data}{$planname} = slurp_json ("$plansdir/$planname.json", $json);
         $vault{data}{$planname}{due} = {};
-        #$vault{data}{$planname}{graph_marginal} = {};
-        #$vault{data}{$planname}{graph_effective} = {};
+        $vault{data}{$planname}{graph_marginal}  = {};
+        $vault{data}{$planname}{graph_effective} = {};
     }
 }
 
