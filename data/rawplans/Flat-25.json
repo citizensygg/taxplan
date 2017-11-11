@@ -1,0 +1,8 @@
+{
+   "plan_type" : "flat",
+   "raw_rates" : {
+      "rate" : 15
+   },
+   "plan_name" : "Flat-25",
+   "description" : "A flat tax of 25%"
+}

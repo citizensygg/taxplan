@@ -1,0 +1,95 @@
+{
+   "plan_type" : "stepped",
+   "inflections" : [
+      0,
+      13600,
+      51800,
+      60000,
+      170000,
+      200000,
+      500000
+   ],
+   "calculatable" : [
+      {
+         "rate" : 38.5,
+         "high" : "top",
+         "running_total" : 150039,
+         "low" : 500000,
+         "margin" : "-"
+      },
+      {
+         "rate" : 35,
+         "high" : 500000,
+         "running_total" : 45039,
+         "low" : 200000,
+         "margin" : 300000
+      },
+      {
+         "rate" : 32.5,
+         "high" : 200000,
+         "running_total" : 35289,
+         "low" : 170000,
+         "margin" : 30000
+      },
+      {
+         "rate" : 25,
+         "high" : 170000,
+         "running_total" : 7789,
+         "low" : 60000,
+         "margin" : 110000
+      },
+      {
+         "rate" : 22.5,
+         "high" : 60000,
+         "running_total" : 5944,
+         "low" : 51800,
+         "margin" : 8200
+      },
+      {
+         "rate" : 12,
+         "high" : 51800,
+         "running_total" : 1360,
+         "low" : 13600,
+         "margin" : 38200
+      },
+      {
+         "rate" : 10,
+         "high" : 13600,
+         "running_total" : 0,
+         "low" : 0,
+         "margin" : 13600
+      }
+   ],
+   "raw_rates" : [
+      [
+         0,
+         10
+      ],
+      [
+         13600,
+         12
+      ],
+      [
+         51800,
+         22.5
+      ],
+      [
+         60000,
+         25
+      ],
+      [
+         170000,
+         32.5
+      ],
+      [
+         200000,
+         35
+      ],
+      [
+         500000,
+         38.5
+      ]
+   ],
+   "plan_name" : "2017-senate-household",
+   "description" : "Senate proposed plan in 2017 to file as head of household"
+}

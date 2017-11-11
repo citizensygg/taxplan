@@ -1,0 +1,35 @@
+{
+   "plan_type" : "stepped",
+   "raw_rates" : [
+      [
+         0,
+         10
+      ],
+      [
+         19050,
+         12
+      ],
+      [
+         77400,
+         22.5
+      ],
+      [
+         120000,
+         25
+      ],
+      [
+         290000,
+         32.5
+      ],
+      [
+         390000,
+         35
+      ],
+      [
+         1000000,
+         38.5
+      ]
+   ],
+   "plan_name" : "2017-senate-joint",
+   "description" : "Senate proposed plan in 2017 to file jointly"
+}

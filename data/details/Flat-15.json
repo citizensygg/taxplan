@@ -1,0 +1,12 @@
+{
+   "plan_type" : "flat",
+   "inflections" : [],
+   "calculatable" : {
+      "rate" : 15
+   },
+   "raw_rates" : {
+      "rate" : 15
+   },
+   "plan_name" : "Flat-15",
+   "description" : "A flat tax of 15%"
+}

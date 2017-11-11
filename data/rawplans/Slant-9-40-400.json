@@ -1,0 +1,11 @@
+{
+   "plan_type" : "slanted",
+   "raw_rates" : {
+      "highpoint" : 400000,
+      "lowrate" : 9,
+      "highrate" : 40,
+      "lowpoint" : 0
+   },
+   "plan_name" : "Slant-9-40-400",
+   "description" : "A slanted tax starting at 9% and rising to 40% on when taxable income reaches $400,000 then becoming flat from there"
+}

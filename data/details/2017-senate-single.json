@@ -1,0 +1,95 @@
+{
+   "plan_type" : "stepped",
+   "inflections" : [
+      0,
+      9525,
+      38700,
+      60000,
+      170000,
+      200000,
+      500000
+   ],
+   "calculatable" : [
+      {
+         "rate" : 38.5,
+         "high" : "top",
+         "running_total" : 151496,
+         "low" : 500000,
+         "margin" : "-"
+      },
+      {
+         "rate" : 35,
+         "high" : 500000,
+         "running_total" : 46496,
+         "low" : 200000,
+         "margin" : 300000
+      },
+      {
+         "rate" : 32.5,
+         "high" : 200000,
+         "running_total" : 36746,
+         "low" : 170000,
+         "margin" : 30000
+      },
+      {
+         "rate" : 25,
+         "high" : 170000,
+         "running_total" : 9246,
+         "low" : 60000,
+         "margin" : 110000
+      },
+      {
+         "rate" : 22.5,
+         "high" : 60000,
+         "running_total" : 4453.5,
+         "low" : 38700,
+         "margin" : 21300
+      },
+      {
+         "rate" : 12,
+         "high" : 38700,
+         "running_total" : 952.5,
+         "low" : 9525,
+         "margin" : 29175
+      },
+      {
+         "rate" : 10,
+         "high" : 9525,
+         "running_total" : 0,
+         "low" : 0,
+         "margin" : 9525
+      }
+   ],
+   "raw_rates" : [
+      [
+         0,
+         10
+      ],
+      [
+         9525,
+         12
+      ],
+      [
+         38700,
+         22.5
+      ],
+      [
+         60000,
+         25
+      ],
+      [
+         170000,
+         32.5
+      ],
+      [
+         200000,
+         35
+      ],
+      [
+         500000,
+         38.5
+      ]
+   ],
+   "plan_name" : "2017-senate-single",
+   "description" : "Senate proposed plan in 2017 to file single"
+}

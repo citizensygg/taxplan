@@ -1,0 +1,35 @@
+{
+   "plan_type" : "stepped",
+   "raw_rates" : [
+      [
+         0,
+         10
+      ],
+      [
+         13600,
+         12
+      ],
+      [
+         51800,
+         22.5
+      ],
+      [
+         60000,
+         25
+      ],
+      [
+         170000,
+         32.5
+      ],
+      [
+         200000,
+         35
+      ],
+      [
+         500000,
+         38.5
+      ]
+   ],
+   "plan_name" : "2017-senate-household",
+   "description" : "Senate proposed plan in 2017 to file as head of household"
+}
