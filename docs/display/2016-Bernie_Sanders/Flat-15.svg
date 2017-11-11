@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="300" width="800" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<g id="n1832611">
+		<g id="axis8527722" />
+		<g id="axisn7352318">
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="770" y1="270" y2="270" />
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="30" y2="270" />
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="270" y2="273.75" />
+			<text transform="rotate(90,30,277.5)" x="30" y="277.5"></text>
+			<text transform="rotate(90,29.99926,277.5)" x="29.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="104" x2="104" y1="270" y2="273.75" />
+			<text transform="rotate(90,104,277.5)" x="104" y="277.5"></text>
+			<text transform="rotate(90,103.99926,277.5)" x="103.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="178" x2="178" y1="270" y2="273.75" />
+			<text transform="rotate(90,178,277.5)" x="178" y="277.5"></text>
+			<text transform="rotate(90,177.99926,277.5)" x="177.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="252" x2="252" y1="270" y2="273.75" />
+			<text transform="rotate(90,252,277.5)" x="252" y="277.5"></text>
+			<text transform="rotate(90,251.99926,277.5)" x="251.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="326" x2="326" y1="270" y2="273.75" />
+			<text transform="rotate(90,326,277.5)" x="326" y="277.5"></text>
+			<text transform="rotate(90,325.99926,277.5)" x="325.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="400" x2="400" y1="270" y2="273.75" />
+			<text transform="rotate(90,400,277.5)" x="400" y="277.5"></text>
+			<text transform="rotate(90,399.99926,277.5)" x="399.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="474" x2="474" y1="270" y2="273.75" />
+			<text transform="rotate(90,474,277.5)" x="474" y="277.5"></text>
+			<text transform="rotate(90,473.99926,277.5)" x="473.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="548" x2="548" y1="270" y2="273.75" />
+			<text transform="rotate(90,548,277.5)" x="548" y="277.5"></text>
+			<text transform="rotate(90,547.99926,277.5)" x="547.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="622" x2="622" y1="270" y2="273.75" />
+			<text transform="rotate(90,622,277.5)" x="622" y="277.5"></text>
+			<text transform="rotate(90,621.99926,277.5)" x="621.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="696" x2="696" y1="270" y2="273.75" />
+			<text transform="rotate(90,696,277.5)" x="696" y="277.5"></text>
+			<text transform="rotate(90,695.99926,277.5)" x="695.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="770" x2="770" y1="270" y2="273.75" />
+			<text transform="rotate(90,770,277.5)" x="770" y="277.5"></text>
+			<text transform="rotate(90,769.99926,277.5)" x="769.99926" y="277.5"></text>
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="26.25" y1="270" y2="270" />
+			<text x="0" y="270"></text>
+			<text x="29.99926" y="270"></text>
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="26.25" y1="230" y2="230" />
+			<text x="0" y="230"></text>
+			<text x="30.01406" y="230"></text>
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="26.25" y1="190" y2="190" />
+			<text x="0" y="190"></text>
+			<text x="30.02886" y="190"></text>
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="26.25" y1="150" y2="150" />
+			<text x="0" y="150"></text>
+			<text x="30.04366" y="150"></text>
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="26.25" y1="110" y2="110" />
+			<text x="0" y="110"></text>
+			<text x="30.05846" y="110"></text>
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="26.25" y1="70" y2="70" />
+			<text x="0" y="70"></text>
+			<text x="30.07326" y="70"></text>
+			<line style="stroke: black; stroke-width: 2" x1="30" x2="26.25" y1="30" y2="30" />
+			<text x="0" y="30"></text>
+			<text x="30.08806" y="30"></text>
+		</g>
+	</g>
+	<text fill="black" stroke="black" x="40" y="285">0</text>
+	<text fill="black" stroke="black" x="380" y="285">250000</text>
+	<text fill="black" stroke="black" x="730" y="285">500000</text>
+	<text fill="black" stroke="black" x="10" y="260">0</text>
+	<text fill="black" stroke="black" x="10" y="160">30</text>
+	<text fill="black" stroke="black" x="10" y="45">60</text>
+	<g id="n4439360">
+		<g id="line6616157" />
+		<g id="linen6015274">
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="30" y1="270" y2="230" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="31.3653" y1="230" y2="230" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="31.3653" x2="31.3653" y1="230" y2="210" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="31.3653" x2="35.5426" y1="210" y2="210" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="35.5426" x2="35.5426" y1="210" y2="170" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="35.5426" x2="41.1888" y1="170" y2="170" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="41.1888" x2="41.1888" y1="170" y2="158" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="41.1888" x2="47.0533" y1="158" y2="158" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="47.0533" x2="47.0533" y1="158" y2="138" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="47.0533" x2="48.5" y1="138" y2="138" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="48.5" x2="48.5" y1="138" y2="122" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="48.5" x2="67" y1="122" y2="122" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="67" x2="67" y1="122" y2="98" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="67" x2="67" y1="98" y2="62" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="67" x2="67" y1="62" y2="30" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="67" x2="178" y1="30" y2="98" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="178" x2="178" y1="98" y2="78" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="178" x2="770" y1="78" y2="78" />
+			<line style="fill: green; stroke: green; stroke-width: 2" x1="770" x2="770" y1="78" y2="62" />
+		</g>
+	</g>
+	<text fill="green" stroke="green" x="50" y="50">2016-Bernie_Sanders marginal rate</text>
+	<g id="n8151797">
+		<g id="line1695760" />
+		<g id="linen7324732">
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="30" y1="270" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="37.4" y1="230" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="37.4" x2="43.801" y1="230" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="43.801" x2="44.097" y1="230" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="44.097" x2="44.8" y1="230" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="44.8" x2="49.758" y1="230" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="49.758" x2="50.128" y1="230" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="50.128" x2="52.2" y1="230" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="52.2" x2="57.306" y1="230" y2="230" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="57.306" x2="57.602" y1="230" y2="229.785522788204" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="57.602" x2="58.194" y1="229.785522788204" y2="229.370078740157" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="58.194" x2="59.6" y1="229.370078740157" y2="228.45" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="59.6" x2="67" y1="228.45" y2="224.76" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="67" x2="74.4" y1="224.76" y2="222.3" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="74.4" x2="81.8" y1="222.3" y2="220.542857142857" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="81.8" x2="86.166" y1="220.542857142857" y2="219.723320158103" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="86.166" x2="87.276" y1="219.723320158103" y2="219.53488372093" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="87.276" x2="89.2" y1="219.53488372093" y2="219.225" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="89.2" x2="96.6" y1="219.225" y2="218.2" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="96.6" x2="104" y1="218.2" y2="217.38" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="104" x2="105.184" y1="217.38" y2="217.263779527559" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="105.184" x2="106.664" y1="217.263779527559" y2="217.123552123552" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="106.664" x2="111.4" y1="217.123552123552" y2="216.709090909091" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="111.4" x2="118.8" y1="216.709090909091" y2="216.15" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="118.8" x2="126.2" y1="216.15" y2="215.676923076923" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="126.2" x2="133.6" y1="215.676923076923" y2="215.271428571429" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="133.6" x2="140.852" y1="215.271428571429" y2="214.926568758344" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="140.852" x2="141" y1="214.926568758344" y2="214.866666666667" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="141" x2="142.332" y1="214.866666666667" y2="214.33465085639" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="142.332" x2="143.294" y1="214.33465085639" y2="213.958197256695" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="143.294" x2="144.552" y1="213.958197256695" y2="213.475452196382" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="144.552" x2="148.4" y1="213.475452196382" y2="212.0625" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="148.4" x2="155.8" y1="212.0625" y2="209.588235294118" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="155.8" x2="163.2" y1="209.588235294118" y2="207.388888888889" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="163.2" x2="166.012" y1="207.388888888889" y2="206.615886833515" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="166.012" x2="170.6" y1="206.615886833515" y2="205.421052631579" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="170.6" x2="178" y1="205.421052631579" y2="203.65" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="178" x2="192.8" y1="203.65" y2="200.590909090909" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="192.8" x2="202.679" y1="200.590909090909" y2="198.840797085922" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="202.679" x2="207.6" y1="198.840797085922" y2="198.041666666667" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="207.6" x2="222.4" y1="198.041666666667" y2="195.884615384615" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="222.4" x2="224.176" y1="195.884615384615" y2="195.647865853659" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="224.176" x2="237.2" y1="195.647865853659" y2="194.035714285714" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="237.2" x2="252" y1="194.035714285714" y2="192.433333333333" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="252" x2="253.776" y1="192.433333333333" y2="192.255291005291" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="253.776" x2="256.588" y1="192.255291005291" y2="191.830176355323" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="256.588" x2="266.8" y1="191.830176355323" y2="190.37125" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="266.8" x2="281.6" y1="190.37125" y2="188.467058823529" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="281.6" x2="296.4" y1="188.467058823529" y2="186.774444444444" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="296.4" x2="311.2" y1="186.774444444444" y2="185.26" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="311.2" x2="313.642" y1="185.26" y2="185.025306548396" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="313.642" x2="326" y1="185.025306548396" y2="183.897" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="326" x2="338.358" y1="183.897" y2="182.859131269498" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="338.358" x2="340.8" y1="182.859131269498" y2="182.66380952381" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="340.8" x2="344.5" y1="182.66380952381" y2="182.373647058824" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="344.5" x2="355.6" y1="182.373647058824" y2="181.542727272727" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="355.6" x2="370.4" y1="181.542727272727" y2="180.519130434783" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="370.4" x2="371.066" y1="180.519130434783" y2="180.475157300933" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="371.066" x2="375.358" y1="180.475157300933" y2="179.947289479323" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="375.358" x2="378.318" y1="179.947289479323" y2="179.590822179732" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="378.318" x2="385.2" y1="179.590822179732" y2="178.785" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="385.2" x2="400" y1="178.785" y2="177.1536" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="400" x2="414.8" y1="177.1536" y2="175.032307692308" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="414.8" x2="429.6" y1="175.032307692308" y2="173.068148148148" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="429.6" x2="437" y1="173.068148148148" y2="172.139636363636" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="437" x2="444.4" y1="172.139636363636" y2="171.244285714286" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="444.4" x2="459.2" y1="171.244285714286" y2="169.546206896552" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="459.2" x2="474" y1="169.546206896552" y2="167.961333333333" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="474" x2="548" y1="167.961333333333" y2="161.395428571429" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="548" x2="607.2" y1="161.395428571429" y2="157.354871794872" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="607.2" x2="622" y1="157.354871794872" y2="156.471" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="622" x2="646.716" y1="156.471" y2="155.089512838973" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="646.716" x2="649.232" y1="155.089512838973" y2="154.955066921606" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="649.232" x2="687.934" y1="154.955066921606" y2="153.016533573276" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="687.934" x2="696" y1="153.016533573276" y2="152.640888888889" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="696" x2="726.636" y1="152.640888888889" y2="151.293392819205" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="726.636" x2="770" y1="151.293392819205" y2="149.5768" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="770" x2="770" y1="149.5768" y2="30" />
+		</g>
+	</g>
+	<text fill="blue" stroke="blue" x="50" y="70">2016-Bernie_Sanders effective rate</text>
+	<g id="n6519128">
+		<g id="line7617503" />
+		<g id="linen5847102">
+			<line style="fill: red; stroke: red; stroke-width: 2" x1="30" x2="30" y1="270" y2="210" />
+			<line style="fill: red; stroke: red; stroke-width: 2" x1="30" x2="770" y1="210" y2="210" />
+			<line style="fill: red; stroke: red; stroke-width: 2" x1="770" x2="770" y1="210" y2="30" />
+		</g>
+	</g>
+	<text fill="red" stroke="red" x="50" y="90">Flat-15 rate</text>
+	<!-- 
+	Generated using the Perl SVG Module V2.78
+	by Ronan Oger
+	Info: http://www.roitsystems.com/
+ -->
+</svg>
