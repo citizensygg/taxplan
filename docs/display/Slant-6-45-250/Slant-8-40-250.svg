@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg height="300" width="800" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-	<g id="n9782117">
-		<g id="axis0868851" />
-		<g id="axisn6727551">
+	<g id="n4186721">
+		<g id="axis8669680" />
+		<g id="axisn7243109">
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="770" y1="270" y2="270" />
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="30" y2="270" />
 			<line style="stroke: black; stroke-width: 2" x1="30" x2="30" y1="270" y2="273.75" />
@@ -68,9 +68,9 @@
 	<text fill="black" stroke="black" x="10" y="260">0</text>
 	<text fill="black" stroke="black" x="10" y="160">30</text>
 	<text fill="black" stroke="black" x="10" y="45">60</text>
-	<g id="n8366794">
-		<g id="line7932076" />
-		<g id="linen6479759">
+	<g id="n2796219">
+		<g id="line3208244" />
+		<g id="linen0590152">
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="30" y1="270" y2="246" />
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="30" x2="400" y1="246" y2="90" />
 			<line style="fill: green; stroke: green; stroke-width: 2" x1="400" x2="770" y1="90" y2="90" />
@@ -78,9 +78,9 @@
 		</g>
 	</g>
 	<text fill="green" stroke="green" x="50" y="50">Slant-6-45-250 marginal rate</text>
-	<g id="n9594747">
-		<g id="line2103590" />
-		<g id="linen8671576">
+	<g id="n2533007">
+		<g id="line0193508" />
+		<g id="linen2414906">
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="30" y1="270" y2="246" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="30" x2="400" y1="246" y2="168" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="400" x2="414.8" y1="168" y2="165" />
@@ -90,7 +90,8 @@
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="444.4" x2="459.2" y1="159.642857142857" y2="157.241379310345" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="459.2" x2="474" y1="157.241379310345" y2="155" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="474" x2="548" y1="155" y2="145.714285714286" />
-			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="548" x2="622" y1="145.714285714286" y2="138.75" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="548" x2="607.2" y1="145.714285714286" y2="140" />
+			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="607.2" x2="622" y1="140" y2="138.75" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="622" x2="646.716" y1="138.75" y2="136.796256299496" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="646.716" x2="649.232" y1="136.796256299496" y2="136.606118546845" />
 			<line style="fill: blue; stroke: blue; stroke-width: 2" x1="649.232" x2="687.934" y1="136.606118546845" y2="133.864582161737" />
@@ -101,9 +102,9 @@
 		</g>
 	</g>
 	<text fill="blue" stroke="blue" x="50" y="70">Slant-6-45-250 effective rate</text>
-	<g id="n7591229">
-		<g id="line1712059" />
-		<g id="linen8897586">
+	<g id="n5836659">
+		<g id="line8158908" />
+		<g id="linen5570369">
 			<line style="fill: red; stroke: red; stroke-width: 2" x1="30" x2="30" y1="270" y2="238" />
 			<line style="fill: red; stroke: red; stroke-width: 2" x1="30" x2="400" y1="238" y2="110" />
 			<line style="fill: red; stroke: red; stroke-width: 2" x1="400" x2="770" y1="110" y2="110" />
@@ -111,9 +112,9 @@
 		</g>
 	</g>
 	<text fill="red" stroke="red" x="50" y="90">Slant-8-40-250 marginal rate</text>
-	<g id="n1851905">
-		<g id="line3415308" />
-		<g id="linen2096885">
+	<g id="n2805765">
+		<g id="line1835636" />
+		<g id="linen1121001">
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="30" x2="30" y1="270" y2="238" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="30" x2="400" y1="238" y2="174" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="400" x2="414.8" y1="174" y2="171.538461538462" />
@@ -123,7 +124,8 @@
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="444.4" x2="459.2" y1="167.142857142857" y2="165.172413793103" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="459.2" x2="474" y1="165.172413793103" y2="163.333333333333" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="474" x2="548" y1="163.333333333333" y2="155.714285714286" />
-			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="548" x2="622" y1="155.714285714286" y2="150" />
+			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="548" x2="607.2" y1="155.714285714286" y2="151.025641025641" />
+			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="607.2" x2="622" y1="151.025641025641" y2="150" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="622" x2="646.716" y1="150" y2="148.39692824574" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="646.716" x2="649.232" y1="148.39692824574" y2="148.240917782027" />
 			<line style="fill: orange; stroke: orange; stroke-width: 2" x1="649.232" x2="687.934" y1="148.240917782027" y2="145.991452030143" />
